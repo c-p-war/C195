@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="wardlaw.mainscreen.appointmentsController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="475.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.appointmentsController">
+    <children>
+        <TableView fx:id="appointTable" layoutX="14.0" layoutY="52.0" prefHeight="371.0" prefWidth="776.0">
+            <columns>
+                <TableColumn fx:id="colApptId" prefWidth="100.0" text="Appointment ID"/>
+                <TableColumn fx:id="colApptTitle" prefWidth="75.0" text="Title"/>
+                <TableColumn fx:id="colApptDescr" prefWidth="75.0" text="Description"/>
+                <TableColumn fx:id="colApptLocation" prefWidth="75.0" text="Location"/>
+                <TableColumn fx:id="colApptContact" prefWidth="75.0" text="Contact"/>
+                <TableColumn fx:id="coldApptType" prefWidth="75.0" text="Type"/>
+                <TableColumn fx:id="colApptStart" prefWidth="75.0" text="Start Date"/>
+                <TableColumn fx:id="colApptEnd" prefWidth="75.0" text="End Date"/>
+                <TableColumn fx:id="colApptCustId" prefWidth="75.0" text="Customer ID"/>
+                <TableColumn fx:id="colApptUserId" prefWidth="75.0" text="User ID"/>
+            </columns>
+        </TableView>
+        <Label fx:id="labelAppoint" layoutX="14.0" layoutY="14.0" text="Appointments"/>
+        <Button fx:id="btnCancel" layoutX="17.0" layoutY="436.0" mnemonicParsing="false" text="Cancel"/>
+        <Button fx:id="btnUpdate" layoutX="732.0" layoutY="437.0" mnemonicParsing="false" text="Update"/>
+        <Button fx:id="btnAdd" layoutX="655.0" layoutY="437.0" mnemonicParsing="false" text="Add"/>
+        <RadioButton fx:id="radioBtnWeek" layoutX="733.0" layoutY="14.0" mnemonicParsing="false" text="Week"/>
+        <RadioButton fx:id="radioBtnMonth" layoutX="655.0" layoutY="14.0" mnemonicParsing="false" text="Month"/>
+    </children>
 </AnchorPane>

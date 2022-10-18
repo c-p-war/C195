@@ -10,5 +10,29 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="wardlaw.mainscreen.appointmentsUpdateController"
             prefHeight="400.0" prefWidth="600.0">
-
+    <children>
+        <Label fx:id="labelApptUpdate" layoutX="14.0" layoutY="14.0" text="Update Apointment"/>
+        <Label fx:id="labelCustId" layoutX="14.0" layoutY="89.0" text="Appt. Id"/>
+        <Label fx:id="labelCustName" layoutX="14.0" layoutY="123.0" text="Title"/>
+        <Label fx:id="labelCustCountry" layoutX="14.0" layoutY="157.0" text="Description"/>
+        <Label fx:id="labelCustDivision" layoutX="14.0" layoutY="191.0" text="Location"/>
+        <Label fx:id="labelCustAddress" layoutX="14.0" layoutY="225.0" text="Contact"/>
+        <Label fx:id="labelCustPostal" layoutX="14.0" layoutY="259.0" text="Type"/>
+        <Label fx:id="labelCustPhone" layoutX="14.0" layoutY="293.0" text="Start Date"/>
+        <TextField fx:id="txtFieldCustId" disable="true" editable="false" layoutX="89.0" layoutY="85.0"/>
+        <TextField fx:id="txtFieldCustName" layoutX="89.0" layoutY="119.0"/>
+        <TextField fx:id="txtFieldCustPostal" layoutX="89.0" layoutY="255.0"/>
+        <TextField fx:id="txtFieldCustPhone" layoutX="89.0" layoutY="289.0"/>
+        <Button fx:id="btnCancel" layoutX="88.0" layoutY="450.0" mnemonicParsing="false" text="Cancel"/>
+        <Button fx:id="btnSubmit" layoutX="193.0" layoutY="451.0" mnemonicParsing="false" text="Submit"/>
+        <Label layoutX="13.0" layoutY="324.0" text="End Date"/>
+        <Label layoutX="13.0" layoutY="358.0" text="Customer Id"/>
+        <Label layoutX="13.0" layoutY="392.0" text="User Id"/>
+        <ComboBox layoutX="88.0" layoutY="221.0" prefWidth="150.0"/>
+        <TextField layoutX="89.0" layoutY="187.0"/>
+        <TextField layoutX="89.0" layoutY="153.0"/>
+        <TextField layoutX="89.0" layoutY="320.0"/>
+        <TextField layoutX="89.0" layoutY="354.0"/>
+        <TextField layoutX="89.0" layoutY="388.0"/>
+    </children>
 </AnchorPane>
