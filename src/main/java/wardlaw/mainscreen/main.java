@@ -1,8 +1,6 @@
 package wardlaw.mainscreen;
 
-import helpers.JDBC;
-import helpers.appointmentsUtil;
-import helpers.customerUtil;
+import helpers.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -39,6 +37,7 @@ public class main extends Application {
 //        LocalDateTime lt = LocalDateTime.now();
 
         JDBC.openConnection();
+        contactUtil.getContacts();
 //        Customer john = new Customer(5, "John", "123 Main", "23923", "1234567891", 3);
 
 //        Appointment foo = new Appointment(4 , "rrr", "rrr", "rrr", "rrr", lt, lt, 2,1, 1);
