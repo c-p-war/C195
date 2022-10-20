@@ -2,9 +2,22 @@ package helpers;
 
 import javafx.scene.control.Alert;
 import java.lang.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
-public class helpers {
+public class util {
+    public static int checkUsers(String userName, String password) throws SQLException {
+        String sql ="SELECT * FROM users WHERE User_Name = ? AND Password =?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1,"userName");
+        ps.setString(2, "password");
+        // TODO: Verify that this is the correct way to run a simple select
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
+
     public static Alert stringToError(String string) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

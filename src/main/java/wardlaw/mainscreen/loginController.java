@@ -1,6 +1,6 @@
 package wardlaw.mainscreen;
 
-import helpers.helpers;
+import helpers.util;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -40,7 +40,7 @@ public class loginController {
             stage.setScene(scene);
             stage.show();
         } else if (!successfulLogin){
-            helpers.stringToError("Unsuccessful login.\n\n Try again");
+            util.stringToError("Unsuccessful login.\n\n Try again");
         }
     }
 }
