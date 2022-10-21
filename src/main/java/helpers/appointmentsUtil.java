@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class appointmentsUtil {
     public static ObservableList<Appointment> getAppointments()throws SQLException{
@@ -34,6 +35,30 @@ public class appointmentsUtil {
         }
         System.out.println(appointmentsList);
         return appointmentsList;
+    }
+
+    public static ObservableList<Appointment> getFifteen() throws SQLException {
+        String getFifteen = "SELECT * FROM appointments where START >= CURRENT_TIMESTAMP AND START <= DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 15 MINUTE)";
+        PreparedStatement ps = JDBC.connection.prepareCall((getFifteen));
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Appointment> fifteenList = FXCollections.observableArrayList();
+
+        while(rs.next()){
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");
+            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactId);
+            fifteenList.add(appointment);
+        }
+        System.out.println(fifteenList);
+        return fifteenList;
     }
 
     public static ObservableList<Appointment> getWeek() throws SQLException {
@@ -83,16 +108,59 @@ public class appointmentsUtil {
         System.out.println(monthList);
         return monthList;
     }
-    // TODO: Write query to update start
-    public static void updateStart(Appointment appointment){
-
+    // TODO: Check date conversions
+    public static void updateStart(Appointment appointment) throws SQLException {
+        // TODO: Date comparison and alert
+        // TODO: Appointment overlap comparison and alert
+        String updateStart = "UPDATE appointments SET Start = ? WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(updateStart);
+        ps.setTimestamp(1, Timestamp.valueOf(appointment.getStart()));
+        ps.setInt(2, appointment.getId());
+        ps.executeUpdate();
     }
-    // TODO: Write query to update end
-    public static void updateEnd(Appointment appointment){
+    // TODO: Check date conversions
+    public static void updateEnd(Appointment appointment) throws SQLException{
+        // TODO: Date comparison and alert
+        // TODO: Appointment overlap comparison and alert
+        String updateEnd = "UPDATE appointments SET End = ? WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(updateEnd);
+        ps.setTimestamp(1, Timestamp.valueOf(appointment.getStart()));
+        ps.setInt(2, appointment.getId());
+        ps.executeUpdate();
+    }
 
+    public static ArrayList<String> getDistinctTypes() throws SQLException{
+        String sql = "SELECT DISTINCT Type FROM appointments";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        ArrayList<String> distinctTypes = new ArrayList();
+        while(rs.next()){
+            String type = rs.getString("Type");
+            distinctTypes.add(type);
+        }
+        // TODO: This may be a good spot for a lambda, for every type, we need to grab the count
+        System.out.println(distinctTypes);
+        return distinctTypes;
+    }
+
+    public static int countTypes(String in_type) throws SQLException{
+        String sql = "SELECT COUNT(*) AS ? FROM appointments WHERE Type = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, "count");
+        ps.setString(2, in_type);
+        ps.executeQuery();
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Integer> distinctCount = new ArrayList();
+        while(rs.next()){
+            int count = rs.getInt("count");
+            distinctCount.add(count);
+        }
+        return distinctCount.get(0);
     }
 
     public static void addAppointment(Appointment appointment){
+        // TODO: Date comparison and alert
+        // TODO: Appointment overlap comparison and alert
         try {
             String sql = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -113,6 +181,8 @@ public class appointmentsUtil {
     }
 
     public static void updateAppointment(Appointment appointment){
+        // TODO: Date comparison and alert
+        // TODO: Appointment overlap comparison and alert
         try {
             String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);

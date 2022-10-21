@@ -37,7 +37,9 @@ public class main extends Application {
 //        LocalDateTime lt = LocalDateTime.now();
 
         JDBC.openConnection();
-        contactUtil.getContacts();
+        util.checkUsers("test", "test");
+        appointmentsUtil.getDistinctTypes();
+        appointmentsUtil.countTypes("Planning Session");
 //        Customer john = new Customer(5, "John", "123 Main", "23923", "1234567891", 3);
 
 //        Appointment foo = new Appointment(4 , "rrr", "rrr", "rrr", "rrr", lt, lt, 2,1, 1);

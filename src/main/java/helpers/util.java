@@ -1,6 +1,10 @@
 package helpers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import model.User;
+
 import java.lang.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,14 +12,23 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class util {
-    public static int checkUsers(String userName, String password) throws SQLException {
+    public static  ObservableList<User> checkUsers(String userName, String in_password) throws SQLException {
         String sql ="SELECT * FROM users WHERE User_Name = ? AND Password =?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1,"userName");
-        ps.setString(2, "password");
-        // TODO: Verify that this is the correct way to run a simple select
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        ps.setString(1, userName);
+        ps.setString(2, in_password);
+        ResultSet rs = ps.executeQuery();
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        while (rs.next()) {
+            int id = rs.getInt("User_ID");
+            String name = rs.getString("User_Name");
+            String password = rs.getString("Password");
+            User user = new User(id, name, password);
+            userList.add(user);
+        }
+        System.out.println(userList.size());
+        System.out.println(userList);
+        return userList;
     }
 
     public static Alert stringToError(String string) {
