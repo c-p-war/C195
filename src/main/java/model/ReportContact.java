@@ -1,7 +1,8 @@
 package model;
 
 import java.time.LocalDateTime;
-// TODO: This could be an extension of the appointment class
+
+// TODO: This could be an extension of the appointment class?
 public class ReportContact {
     private int id;
     private String title;

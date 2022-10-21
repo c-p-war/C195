@@ -4,12 +4,15 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.loginController">
-   <children>
-      <Button fx:id="btnLogin" layoutX="260.0" layoutY="246.0" mnemonicParsing="false" onAction="#login" text="Button" />
-      <TextField fx:id="txtFieldUsername" layoutX="260.0" layoutY="128.0" />
-      <TextField fx:id="txtFieldPassword" layoutX="260.0" layoutY="181.0" />
-      <Label fx:id="labelUserName" layoutX="181.0" layoutY="133.0" text="Username" />
-      <Label fx:id="labelPassword" layoutX="181.0" layoutY="186.0" text="Password" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="wardlaw.mainscreen.loginController">
+    <children>
+        <Button fx:id="btnLogin" layoutX="260.0" layoutY="246.0" mnemonicParsing="false" onAction="#login"
+                text="Button"/>
+        <TextField fx:id="txtFieldUsername" layoutX="260.0" layoutY="128.0"/>
+        <TextField fx:id="txtFieldPassword" layoutX="260.0" layoutY="181.0"/>
+        <Label fx:id="labelUserName" layoutX="181.0" layoutY="133.0" text="Username"/>
+        <Label fx:id="labelPassword" layoutX="181.0" layoutY="186.0" text="Password"/>
+    </children>
 </AnchorPane>

@@ -5,7 +5,7 @@ public class Division {
     private String name;
     private int countryId;
 
-    public Division(int id, String name, int countryId){
+    public Division(int id, String name, int countryId) {
         this.id = id;
         this.name = name;
         this.countryId = countryId;

@@ -141,7 +141,7 @@ public class appointmentsUtil {
             String type = rs.getString("Type");
             distinctTypes.add(type);
         }
-        // TODO: This may be a good spot for a lambda, for every type, we need to grab the count
+        // TODO: Lambda?
         System.out.println(distinctTypes);
         return distinctTypes;
     }
@@ -161,7 +161,6 @@ public class appointmentsUtil {
         return distinctCount.get(0);
     }
 
-    // TODO: 'SELECT MONTH(Start),COUNT(*) FROM appointments GROUP BY MONTH(Start)' will return a count of appointments by month
     public static ObservableList<ReportMonth> reportMonths() throws SQLException {
         String sql = "SELECT MONTH(Start) AS ?,COUNT(*) AS ? FROM appointments GROUP BY MONTH(Start)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

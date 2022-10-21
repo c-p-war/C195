@@ -15,36 +15,35 @@ public class customerUtil {
         ResultSet rs = ps.executeQuery();
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
-        while (rs.next()){
+        while (rs.next()) {
             int id = rs.getInt("Customer_ID");
             String name = rs.getString("Customer_Name");
             String address = rs.getString("Address");
             String postal = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
             int divisionId = rs.getInt("Division_ID");
-            Customer customer = new Customer(id,name,address,postal,phone,divisionId);
+            Customer customer = new Customer(id, name, address, postal, phone, divisionId);
             customerList.add(customer);
         }
         System.out.println(customerList);
         return customerList;
     }
 
-    // TODO: Where to implement this custom report?
-    public static ObservableList<Customer> getCustomersByDivision(int in_divisionId) throws SQLException{
+    public static ObservableList<Customer> getCustomersByDivision(int in_divisionId) throws SQLException {
         String sql = "SELECT * FROM customers WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareCall(sql);
         ps.setInt(1, in_divisionId);
         ResultSet rs = ps.executeQuery();
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
-        while (rs.next()){
+        while (rs.next()) {
             int id = rs.getInt("Customer_ID");
             String name = rs.getString("Customer_Name");
             String address = rs.getString("Address");
             String postal = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
             int divisionId = rs.getInt("Division_ID");
-            Customer customer = new Customer(id,name,address,postal,phone,divisionId);
+            Customer customer = new Customer(id, name, address, postal, phone, divisionId);
             customerList.add(customer);
         }
         System.out.println(customerList);
@@ -63,7 +62,7 @@ public class customerUtil {
             ps.setString(5, customer.getPhone());
             ps.setInt(6, customer.getDivisionId());
             ps.executeUpdate();
-        } catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
@@ -79,9 +78,8 @@ public class customerUtil {
             ps.setInt(5, customer.getDivisionId());
             ps.setInt(6, customer.getId());
             ps.executeUpdate();
-            // TODO: Understand throwable
         } catch (SQLException throwables) {
-        throwables.printStackTrace();
+            throwables.printStackTrace();
         }
     }
 
@@ -97,7 +95,7 @@ public class customerUtil {
             PreparedStatement delete_cust_ps = JDBC.connection.prepareCall(deleteCustomer);
             delete_cust_ps.setInt(1, customer.getId());
             delete_cust_ps.executeUpdate();
-        } catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 

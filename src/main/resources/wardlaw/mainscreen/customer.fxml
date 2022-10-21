@@ -17,8 +17,10 @@
             </columns>
         </TableView>
         <Label fx:id="labelCust" layoutX="14.0" layoutY="14.0" text="Customers"/>
-        <Button fx:id="btnCancel" layoutX="17.0" layoutY="436.0" mnemonicParsing="false" onAction="#cancel" text="Cancel"/>
-        <Button fx:id="btnUpdate" layoutX="419.0" layoutY="437.0" mnemonicParsing="false" onAction="#update" text="Update"/>
+        <Button fx:id="btnCancel" layoutX="17.0" layoutY="436.0" mnemonicParsing="false" onAction="#cancel"
+                text="Cancel"/>
+        <Button fx:id="btnUpdate" layoutX="419.0" layoutY="437.0" mnemonicParsing="false" onAction="#update"
+                text="Update"/>
         <Button fx:id="btnAdd" layoutX="359.0" layoutY="437.0" mnemonicParsing="false" onAction="#add" text="Add"/>
     </children>
 </AnchorPane>

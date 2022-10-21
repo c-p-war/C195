@@ -27,19 +27,8 @@ public class main extends Application {
         stage.show();
     }
 
-    // TODO: Remove the sqlException if the sql call is removed
     public static void main(String[] args) throws SQLException {
-        // Wrap the launch for javaFX with the DB connections
-
-//        Date date = new Date();
-//        long time = date.getTime();
-//        Timestamp ts = new Timestamp(time);
-//        LocalDateTime lt = LocalDateTime.now();
-
         JDBC.openConnection();
-        appointmentsUtil.reportMonths();
-
-
         launch();
         JDBC.closeConnection();
     }

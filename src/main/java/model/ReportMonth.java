@@ -5,7 +5,7 @@ public class ReportMonth {
     private int count;
     private String monthString;
 
-    public ReportMonth(int monthInt, String monthString, int count){
+    public ReportMonth(int monthInt, String monthString, int count) {
         this.monthInt = monthInt;
         this.monthString = monthString;
         this.count = count;

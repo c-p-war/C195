@@ -30,10 +30,10 @@ public class loginController {
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
         String userName = txtFieldUsername.getText();
         String password = txtFieldPassword.getText();
-        if (util.checkUsers(userName, password).size() > 0){
+        if (util.checkUsers(userName, password).size() > 0) {
             writeActivity("Successful Login - User: Test | Time: ");
             ObservableList<Appointment> comingSoon = appointmentsUtil.getFifteen();
-            if(comingSoon.size() > 0){
+            if (comingSoon.size() > 0) {
                 Appointment alert = comingSoon.get(0);
                 int id = alert.getId();
                 // TODO: Verify time conversion

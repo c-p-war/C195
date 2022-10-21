@@ -21,8 +21,10 @@
             </columns>
         </TableView>
         <Label fx:id="labelAppoint" layoutX="14.0" layoutY="14.0" text="Appointments"/>
-        <Button fx:id="btnCancel" layoutX="17.0" layoutY="436.0" mnemonicParsing="false" onAction="#cancel" text="Cancel"/>
-        <Button fx:id="btnUpdate" layoutX="732.0" layoutY="437.0" mnemonicParsing="false" onAction="#update" text="Update"/>
+        <Button fx:id="btnCancel" layoutX="17.0" layoutY="436.0" mnemonicParsing="false" onAction="#cancel"
+                text="Cancel"/>
+        <Button fx:id="btnUpdate" layoutX="732.0" layoutY="437.0" mnemonicParsing="false" onAction="#update"
+                text="Update"/>
         <Button fx:id="btnAdd" layoutX="655.0" layoutY="437.0" mnemonicParsing="false" onAction="#add" text="Add"/>
         <RadioButton fx:id="radioBtnWeek" layoutX="733.0" layoutY="14.0" mnemonicParsing="false" text="Week"/>
         <RadioButton fx:id="radioBtnMonth" layoutX="655.0" layoutY="14.0" mnemonicParsing="false" text="Month"/>

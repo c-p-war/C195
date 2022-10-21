@@ -12,13 +12,13 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class divisionUtil {
-    public static ObservableList<Division> getDivisions()throws SQLException {
+    public static ObservableList<Division> getDivisions() throws SQLException {
         String getDivisions = "SELECT * FROM first_level_divisions";
         PreparedStatement ps = JDBC.connection.prepareCall((getDivisions));
         ResultSet rs = ps.executeQuery();
         ObservableList<Division> divisionList = FXCollections.observableArrayList();
 
-        while (rs.next()){
+        while (rs.next()) {
             int id = rs.getInt("Division_ID");
             String name = rs.getString("Division");
             int countryId = rs.getInt("Country_ID");
@@ -35,7 +35,7 @@ public class divisionUtil {
         ps.setInt(1, countryId);
         ResultSet rs = ps.executeQuery();
         ObservableList<Division> divisionList = FXCollections.observableArrayList();
-        while(rs.next()){
+        while (rs.next()) {
             int id = rs.getInt("Division_ID");
             String name = rs.getString("Division");
             int out_countryId = rs.getInt("Country_ID");
