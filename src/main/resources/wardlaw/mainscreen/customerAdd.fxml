@@ -30,7 +30,7 @@
         <TextField fx:id="txtFieldCustPostal" layoutX="89.0" layoutY="255.0" />
         <TextField fx:id="txtFieldCustPhone" layoutX="89.0" layoutY="289.0" />
       <Label fx:id="labelCustAdd" layoutX="5.0" layoutY="6.0" text="Add Customer" />
-      <Button fx:id="btnCancel" layoutX="89.0" layoutY="335.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="btnCancel" layoutX="89.0" layoutY="335.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
       <Button fx:id="btnSubmit" layoutX="194.0" layoutY="336.0" mnemonicParsing="false" text="Submit" />
     </children>
 </AnchorPane>

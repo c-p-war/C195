@@ -5,10 +5,11 @@
 
 <AnchorPane prefHeight="320.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.mainScreenController">
    <children>
-      <Button fx:id="btnExit" layoutX="14.0" layoutY="264.0" mnemonicParsing="false" onAction="#login" text="Exit" />
+      <Button fx:id="btnExit" layoutX="14.0" layoutY="264.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
       <Label fx:id="labelMain" layoutX="14.0" layoutY="14.0" text="Main" />
-      <Button fx:id="btnCust" layoutX="54.0" layoutY="71.0" mnemonicParsing="false" text="Customers" />
-      <Button fx:id="btnAppt" layoutX="46.0" layoutY="123.0" mnemonicParsing="false" text="Appointments" />
-      <Button fx:id="btnReports" layoutX="63.0" layoutY="175.0" mnemonicParsing="false" text="Reports" />
+      <Button fx:id="btnCust" layoutX="54.0" layoutY="71.0" mnemonicParsing="false" onAction="#toCustomers" text="Customers" />
+      <Button fx:id="btnAppt" layoutX="46.0" layoutY="123.0" mnemonicParsing="false" onAction="#toAppointments" text="Appointments" />
+<!--      TODO: Report on-action-->
+      <Button fx:id="btnReports" layoutX="63.0" layoutY="175.0" mnemonicParsing="false" onAction="#toReports" text="Reports" />
    </children>
 </AnchorPane>

@@ -39,6 +39,14 @@ public class util {
         return alert;
     }
 
+    public static Alert stringToAlert(String string) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Alert");
+        alert.setContentText(string);
+        alert.showAndWait();
+        return alert;
+    }
+
     public static String contNameToId(String contactName) {
         System.out.println("Contact name: " + contactName);
         // TODO: Finish logic
