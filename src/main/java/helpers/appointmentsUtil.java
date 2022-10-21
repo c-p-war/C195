@@ -30,11 +30,10 @@ public class appointmentsUtil {
             LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");
-            int contactId = rs.getInt("Contact_ID");
-            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactId);
+            String contactName = contactUtil.getContactName(rs.getInt("Contact_ID"));
+            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactName);
             appointmentsList.add(appointment);
         }
-        System.out.println(appointmentsList);
         return appointmentsList;
     }
 
@@ -54,8 +53,8 @@ public class appointmentsUtil {
             LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");
-            int contactId = rs.getInt("Contact_ID");
-            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactId);
+            String contactName = contactUtil.getContactName(rs.getInt("Contact_ID"));
+            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactName);
             fifteenList.add(appointment);
         }
         System.out.println(fifteenList);
@@ -78,11 +77,10 @@ public class appointmentsUtil {
             LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");
-            int contactId = rs.getInt("Contact_ID");
-            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactId);
+            String contactName = contactUtil.getContactName(rs.getInt("Contact_ID"));
+            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactName);
             weekList.add(appointment);
         }
-        System.out.println(weekList);
         return weekList;
     }
 
@@ -102,11 +100,10 @@ public class appointmentsUtil {
             LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");
-            int contactId = rs.getInt("Contact_ID");
-            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactId);
+            String contactName = contactUtil.getContactName(rs.getInt("Contact_ID"));
+            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactName);
             monthList.add(appointment);
         }
-        System.out.println(monthList);
         return monthList;
     }
 
@@ -209,7 +206,7 @@ public class appointmentsUtil {
             ps.setTimestamp(7, Timestamp.valueOf(appointment.getEnd()));
             ps.setInt(8, appointment.getCustomerId());
             ps.setInt(9, appointment.getUserId());
-            ps.setInt(10, appointment.getContactId());
+            ps.setInt(10, contactUtil.getContactId(appointment.getContactName()));
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -230,7 +227,7 @@ public class appointmentsUtil {
             ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
             ps.setInt(7, appointment.getCustomerId());
             ps.setInt(8, appointment.getUserId());
-            ps.setInt(9, appointment.getContactId());
+            ps.setInt(10, contactUtil.getContactId(appointment.getContactName()));
             ps.setInt(10, appointment.getId());
             ps.executeUpdate();
         } catch (SQLException throwables) {

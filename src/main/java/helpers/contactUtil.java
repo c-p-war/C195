@@ -50,4 +50,28 @@ public class contactUtil {
         System.out.println(contactReport);
         return contactReport;
     }
+
+    public static String getContactName(int contactId) throws SQLException{
+        String sql = "SELECT Contact_Name FROM contacts WHERE Contact_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall((sql));
+        ps.setInt(1, contactId);
+        ResultSet rs = ps.executeQuery();
+        String contactName = null;
+        while (rs.next()){
+            contactName = rs.getString("Contact_Name");
+        }
+        return contactName;
+    }
+
+    public static int getContactId(String contactName) throws SQLException{
+        String sql = "SELECT Contact_ID FROM contacts WHERE Contact_Name = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall((sql));
+        ps.setString(1, contactName);
+        ResultSet rs = ps.executeQuery();
+        int contactId = 0;
+        while (rs.next()){
+            contactId = rs.getInt("Contact_ID");
+        }
+        return contactId;
+    }
 }
