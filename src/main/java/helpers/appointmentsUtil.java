@@ -4,6 +4,7 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
+import model.ReportMonth;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,13 +14,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class appointmentsUtil {
-    public static ObservableList<Appointment> getAppointments()throws SQLException{
+    public static ObservableList<Appointment> getAppointments() throws SQLException {
         String getAppointments = "SELECT * FROM appointments";
         PreparedStatement ps = JDBC.connection.prepareCall((getAppointments));
         ResultSet rs = ps.executeQuery();
         ObservableList<Appointment> appointmentsList = FXCollections.observableArrayList();
 
-        while (rs.next()){
+        while (rs.next()) {
             int id = rs.getInt("Appointment_ID");
             String title = rs.getString("Title");
             String description = rs.getString("Description");
@@ -43,7 +44,7 @@ public class appointmentsUtil {
         ResultSet rs = ps.executeQuery();
         ObservableList<Appointment> fifteenList = FXCollections.observableArrayList();
 
-        while(rs.next()){
+        while (rs.next()) {
             int id = rs.getInt("Appointment_ID");
             String title = rs.getString("Title");
             String description = rs.getString("Description");
@@ -67,7 +68,7 @@ public class appointmentsUtil {
         ResultSet rs = ps.executeQuery();
         ObservableList<Appointment> weekList = FXCollections.observableArrayList();
 
-        while(rs.next()){
+        while (rs.next()) {
             int id = rs.getInt("Appointment_ID");
             String title = rs.getString("Title");
             String description = rs.getString("Description");
@@ -91,7 +92,7 @@ public class appointmentsUtil {
         ResultSet rs = ps.executeQuery();
         ObservableList<Appointment> monthList = FXCollections.observableArrayList();
 
-        while(rs.next()){
+        while (rs.next()) {
             int id = rs.getInt("Appointment_ID");
             String title = rs.getString("Title");
             String description = rs.getString("Description");
@@ -108,6 +109,7 @@ public class appointmentsUtil {
         System.out.println(monthList);
         return monthList;
     }
+
     // TODO: Check date conversions
     public static void updateStart(Appointment appointment) throws SQLException {
         // TODO: Date comparison and alert
@@ -118,8 +120,9 @@ public class appointmentsUtil {
         ps.setInt(2, appointment.getId());
         ps.executeUpdate();
     }
+
     // TODO: Check date conversions
-    public static void updateEnd(Appointment appointment) throws SQLException{
+    public static void updateEnd(Appointment appointment) throws SQLException {
         // TODO: Date comparison and alert
         // TODO: Appointment overlap comparison and alert
         String updateEnd = "UPDATE appointments SET End = ? WHERE Appointment_ID = ?";
@@ -129,12 +132,12 @@ public class appointmentsUtil {
         ps.executeUpdate();
     }
 
-    public static ArrayList<String> getDistinctTypes() throws SQLException{
+    public static ArrayList<String> getDistinctTypes() throws SQLException {
         String sql = "SELECT DISTINCT Type FROM appointments";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         ArrayList<String> distinctTypes = new ArrayList();
-        while(rs.next()){
+        while (rs.next()) {
             String type = rs.getString("Type");
             distinctTypes.add(type);
         }
@@ -143,7 +146,7 @@ public class appointmentsUtil {
         return distinctTypes;
     }
 
-    public static int countTypes(String in_type) throws SQLException{
+    public static int countTypes(String in_type) throws SQLException {
         String sql = "SELECT COUNT(*) AS ? FROM appointments WHERE Type = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, "count");
@@ -151,53 +154,87 @@ public class appointmentsUtil {
         ps.executeQuery();
         ResultSet rs = ps.executeQuery();
         ArrayList<Integer> distinctCount = new ArrayList();
-        while(rs.next()){
+        while (rs.next()) {
             int count = rs.getInt("count");
             distinctCount.add(count);
         }
         return distinctCount.get(0);
     }
 
-    public static void addAppointment(Appointment appointment){
+    // TODO: 'SELECT MONTH(Start),COUNT(*) FROM appointments GROUP BY MONTH(Start)' will return a count of appointments by month
+    public static ObservableList<ReportMonth> reportMonths() throws SQLException {
+        String sql = "SELECT MONTH(Start) AS ?,COUNT(*) AS ? FROM appointments GROUP BY MONTH(Start)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, "month");
+        ps.setString(2, "count");
+        ResultSet rs = ps.executeQuery();
+        ObservableList<ReportMonth> reportList = FXCollections.observableArrayList();
+        while (rs.next()) {
+            int monthInt = rs.getInt("month");
+            int count = rs.getInt("count");
+            String monthString = null;
+            // TODO: Add other months
+            switch (monthInt) {
+                case 1:
+                    monthString = "January";
+                    break;
+                case 2:
+                    monthString = "February";
+                    break;
+                case 5:
+                    monthString = "May";
+                    break;
+                case 10:
+                    monthString = "October";
+                    break;
+            }
+            ReportMonth report = new ReportMonth(monthInt, monthString, count);
+            reportList.add(report);
+        }
+        System.out.println(reportList.get(0).getMonthString());
+        return reportList;
+    }
+
+    public static void addAppointment(Appointment appointment) {
         // TODO: Date comparison and alert
         // TODO: Appointment overlap comparison and alert
         try {
             String sql = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, appointment.getId());
-            ps.setString(2,appointment.getTitle());
+            ps.setString(2, appointment.getTitle());
             ps.setString(3, appointment.getDescription());
             ps.setString(4, appointment.getLocation());
-            ps.setString(5,appointment.getType());
+            ps.setString(5, appointment.getType());
             ps.setTimestamp(6, Timestamp.valueOf(appointment.getStart()));
             ps.setTimestamp(7, Timestamp.valueOf(appointment.getEnd()));
-            ps.setInt(8,appointment.getCustomerId());
-            ps.setInt(9,appointment.getUserId());
-            ps.setInt(10,appointment.getContactId());
+            ps.setInt(8, appointment.getCustomerId());
+            ps.setInt(9, appointment.getUserId());
+            ps.setInt(10, appointment.getContactId());
             ps.executeUpdate();
-        } catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public static void updateAppointment(Appointment appointment){
+    public static void updateAppointment(Appointment appointment) {
         // TODO: Date comparison and alert
         // TODO: Appointment overlap comparison and alert
         try {
             String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1,appointment.getTitle());
+            ps.setString(1, appointment.getTitle());
             ps.setString(2, appointment.getDescription());
             ps.setString(3, appointment.getLocation());
-            ps.setString(4,appointment.getType());
+            ps.setString(4, appointment.getType());
             ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
             ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
-            ps.setInt(7,appointment.getCustomerId());
-            ps.setInt(8,appointment.getUserId());
-            ps.setInt(9,appointment.getContactId());
+            ps.setInt(7, appointment.getCustomerId());
+            ps.setInt(8, appointment.getUserId());
+            ps.setInt(9, appointment.getContactId());
             ps.setInt(10, appointment.getId());
             ps.executeUpdate();
-        } catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
@@ -206,13 +243,12 @@ public class appointmentsUtil {
         try {
             String deleteAppointment = "DELETE FROM appointments WHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareCall(deleteAppointment);
-            ps.setInt(1,appointment.getId());
+            ps.setInt(1, appointment.getId());
             ps.executeUpdate();
-        } catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
-
 
 
 }

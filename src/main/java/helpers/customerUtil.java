@@ -29,6 +29,29 @@ public class customerUtil {
         return customerList;
     }
 
+    // TODO: Where to implement this custom report?
+    public static ObservableList<Customer> getCustomersByDivision(int in_divisionId) throws SQLException{
+        String sql = "SELECT * FROM customers WHERE Division_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall(sql);
+        ps.setInt(1, in_divisionId);
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
+
+        while (rs.next()){
+            int id = rs.getInt("Customer_ID");
+            String name = rs.getString("Customer_Name");
+            String address = rs.getString("Address");
+            String postal = rs.getString("Postal_Code");
+            String phone = rs.getString("Phone");
+            int divisionId = rs.getInt("Division_ID");
+            Customer customer = new Customer(id,name,address,postal,phone,divisionId);
+            customerList.add(customer);
+        }
+        System.out.println(customerList);
+        return customerList;
+    }
+
+
     public static void addCustomer(Customer customer) {
         try {
             String sql = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?, ?)";

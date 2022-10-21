@@ -12,9 +12,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Appointment;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class loginController {
@@ -23,6 +26,7 @@ public class loginController {
         int login = util.checkUsers("test", "test").size();
         if (login > 0){
             System.out.println("Login successful");
+            writeActivity("Successful Login - User: Test | Time: ");
             ObservableList<Appointment> comingSoon = appointmentsUtil.getFifteen();
             if(comingSoon.size() > 0){
                 Appointment alert = comingSoon.get(0);
@@ -41,6 +45,17 @@ public class loginController {
         } else if (login < 0){
             // TODO: Add alert
             util.stringToError("Unsuccessful login.\n\n Try again");
+            writeActivity("Unsuccessful Login - User: Test | Time: ");
+        }
+    }
+
+    private void writeActivity(String loginText) {
+        try (FileWriter fileWriter = new FileWriter("login_activity.txt", true)) {
+            Date date = new Date(System.currentTimeMillis());
+            SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+            fileWriter.write(loginText + timeFormat.format(date) + "\n");
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 }
