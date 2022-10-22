@@ -3,18 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.customerUpdateController">
+<AnchorPane prefHeight="400.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.customerUpdateController">
     <children>
-        <TableView fx:id="tableCustUpdate" layoutX="426.0" layoutY="14.0" prefHeight="371.0" prefWidth="460.0">
-            <columns>
-                <TableColumn fx:id="colCustName" prefWidth="75.0" text="Name" />
-                <TableColumn fx:id="colCustCountry" prefWidth="75.0" text="Country" />
-                <TableColumn fx:id="colCustDivision" prefWidth="75.0" text="Division" />
-                <TableColumn fx:id="colCustAddress" prefWidth="75.0" text="Address" />
-                <TableColumn fx:id="colCustPostal" prefWidth="75.0" text="Postal" />
-                <TableColumn fx:id="colCustPhone" prefWidth="75.0" text="Phone" />
-            </columns>
-        </TableView>
         <Label fx:id="labelCustId" layoutX="14.0" layoutY="89.0" text="ID" />
         <Label fx:id="labelCustName" layoutX="14.0" layoutY="123.0" text="Name" />
         <Label fx:id="labelCustCountry" layoutX="14.0" layoutY="157.0" text="Country" />

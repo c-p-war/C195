@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="475.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.customerController">
+<AnchorPane prefHeight="475.0" prefWidth="486.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.customerController">
     <children>
         <TableView fx:id="customersTable" layoutX="14.0" layoutY="52.0" prefHeight="371.0" prefWidth="460.0">
             <columns>

@@ -148,6 +148,20 @@ public class appointmentsController implements Initializable {
         }
     }
 
-    public void delete(ActionEvent actionEvent) {
+    public void delete() throws SQLException {
+        selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
+        appointmentsUtil.deleteAppointment(selectedAppointment);
+        appointTable.setItems(appointmentsUtil.getAppointments());
+        colApptId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colApptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colApptDescr.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colApptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        colApptContact.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        coldApptType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colApptStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+        colApptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        colApptCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
     }
 }
