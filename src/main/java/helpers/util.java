@@ -9,6 +9,10 @@ import java.lang.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Objects;
 
 public class util {
@@ -45,6 +49,18 @@ public class util {
         alert.setContentText(string);
         alert.showAndWait();
         return alert;
+    }
+
+    public static java.sql.Timestamp getTimeStamp() {
+        ZoneId zoneid = ZoneId.of("UTC");
+        LocalDateTime localDateTime = LocalDateTime.now(zoneid);
+        java.sql.Timestamp timeStamp = Timestamp.valueOf(localDateTime);
+        return timeStamp;
+    }
+
+    public static java.sql.Date getDate() {
+        java.sql.Date date = java.sql.Date.valueOf(LocalDate.now());
+        return date;
     }
 
     public static String contNameToId(String contactName) {

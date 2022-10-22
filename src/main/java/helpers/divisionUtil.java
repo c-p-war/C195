@@ -25,7 +25,6 @@ public class divisionUtil {
             Division division = new Division(id, name, countryId);
             divisionList.add(division);
         }
-        System.out.println(divisionList);
         return divisionList;
     }
 
@@ -42,7 +41,6 @@ public class divisionUtil {
             Division division = new Division(id, name, out_countryId);
             divisionList.add(division);
         }
-        System.out.println(divisionList);
         return divisionList;
     }
 }

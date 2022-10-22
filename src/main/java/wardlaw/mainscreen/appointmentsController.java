@@ -53,6 +53,9 @@ public class appointmentsController implements Initializable {
     @FXML
     private RadioButton radioBtnAll;
 
+    public static Appointment selectedAppointment;
+    public static Appointment getSelectedAppointment(){return selectedAppointment;}
+
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
         Scene scene = new Scene(parent);
@@ -62,6 +65,7 @@ public class appointmentsController implements Initializable {
     }
 
     public void update(ActionEvent actionEvent) throws IOException {
+        selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("appointmentsUpdate.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -142,5 +146,8 @@ public class appointmentsController implements Initializable {
             colApptCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         }
+    }
+
+    public void delete(ActionEvent actionEvent) {
     }
 }

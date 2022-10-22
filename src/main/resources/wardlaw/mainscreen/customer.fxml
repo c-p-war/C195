@@ -3,24 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="475.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.customerController">
+<AnchorPane prefHeight="475.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.customerController">
     <children>
         <TableView fx:id="customersTable" layoutX="14.0" layoutY="52.0" prefHeight="371.0" prefWidth="460.0">
             <columns>
-                <TableColumn fx:id="colCustName" prefWidth="75.0" text="Name"/>
-                <TableColumn fx:id="colCustCountry" prefWidth="75.0" text="Country"/>
-                <TableColumn fx:id="colCustDivision" prefWidth="75.0" text="Division"/>
-                <TableColumn fx:id="colCustAddress" prefWidth="75.0" text="Address"/>
-                <TableColumn fx:id="colCustPostal" prefWidth="75.0" text="Postal"/>
-                <TableColumn fx:id="colCustPhone" prefWidth="75.0" text="Phone"/>
+                <TableColumn fx:id="colCustName" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="colCustCountry" prefWidth="75.0" text="Country" />
+                <TableColumn fx:id="colCustDivision" prefWidth="75.0" text="Division" />
+                <TableColumn fx:id="colCustAddress" prefWidth="75.0" text="Address" />
+                <TableColumn fx:id="colCustPostal" prefWidth="75.0" text="Postal" />
+                <TableColumn fx:id="colCustPhone" prefWidth="75.0" text="Phone" />
             </columns>
         </TableView>
-        <Label fx:id="labelCust" layoutX="14.0" layoutY="14.0" text="Customers"/>
-        <Button fx:id="btnCancel" layoutX="17.0" layoutY="436.0" mnemonicParsing="false" onAction="#cancel"
-                text="Cancel"/>
-        <Button fx:id="btnUpdate" layoutX="419.0" layoutY="437.0" mnemonicParsing="false" onAction="#update"
-                text="Update"/>
-        <Button fx:id="btnAdd" layoutX="359.0" layoutY="437.0" mnemonicParsing="false" onAction="#add" text="Add"/>
+        <Label fx:id="labelCust" layoutX="14.0" layoutY="14.0" text="Customers" />
+        <Button fx:id="btnCancel" layoutX="17.0" layoutY="436.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+        <Button fx:id="btnUpdate" layoutX="419.0" layoutY="437.0" mnemonicParsing="false" onAction="#update" text="Update" />
+        <Button fx:id="btnAdd" layoutX="359.0" layoutY="437.0" mnemonicParsing="false" onAction="#add" text="Add" />
+      <Button fx:id="btnDelete" layoutX="281.0" layoutY="437.0" mnemonicParsing="false" onAction="#delete" text="Delete" />
     </children>
 </AnchorPane>

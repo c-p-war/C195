@@ -29,5 +29,6 @@
          </toggleGroup></RadioButton>
         <RadioButton fx:id="radioBtnMonth" layoutX="655.0" layoutY="14.0" mnemonicParsing="false" onAction="#getApptsByMonth" text="Month" toggleGroup="$toggleGroupAppt" />
       <RadioButton fx:id="radioBtnAll" layoutX="592.0" layoutY="14.0" mnemonicParsing="false" onAction="#getApptsAll" selected="true" text="All" toggleGroup="$toggleGroupAppt" />
+      <Button fx:id="btnDelete" layoutX="556.0" layoutY="437.0" mnemonicParsing="false" onAction="#delete" text="Delete" />
     </children>
 </AnchorPane>

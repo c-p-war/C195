@@ -46,6 +46,21 @@ public class customerUtil {
         return countryName;
     }
 
+    public static int getCountryId(int divisionId) throws SQLException {
+        String sql = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall((sql));
+        ps.setInt(1, divisionId);
+        ResultSet rs = ps.executeQuery();
+        int countryId = 0;
+        while (rs.next()) {
+            countryId = rs.getInt("Country_ID");
+        }
+        return countryId;
+    }
+
+
+
+
     public static ObservableList<Customer> getCustomers() throws SQLException {
         String getCustomer = " SELECT * FROM customers";
         PreparedStatement ps = JDBC.connection.prepareCall(getCustomer);
@@ -60,7 +75,6 @@ public class customerUtil {
             String phone = rs.getString("Phone");
             String division = customerUtil.getDivisionName(rs.getInt("Division_ID"));
             String country = customerUtil.getCountryName(rs.getInt("Division_ID"));
-            System.out.println(division);
             Customer customer = new Customer(id, name, address, postal, phone, division, country);
             customerList.add(customer);
         }
@@ -93,39 +107,37 @@ public class customerUtil {
 // TODO: Correct division id
     // TODO: Add country
 
-//    public static void addCustomer(Customer customer) {
-//        try {
-//            String sql = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?, ?)";
-//            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-//            ps.setInt(1, customer.getId());
-//            ps.setString(2, customer.getName());
-//            ps.setString(3, customer.getAddress());
-//            ps.setString(4, customer.getPostal());
-//            ps.setString(5, customer.getPhone());
-//            ps.setInt(6, customer.getDivisionId());
-//            ps.executeUpdate();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//    }
+    public static void addCustomer(Customer customer) {
+        try {
+            String sql = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customer.getId());
+            ps.setString(2, customer.getName());
+            ps.setString(3, customer.getAddress());
+            ps.setString(4, customer.getPostal());
+            ps.setString(5, customer.getPhone());
+            ps.setInt(6,getDivisionId(customer.getDivision()));
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
-    // TODO: Correct division id
-    // TODO: Add country
-//    public static void updateCustomer(Customer customer) throws SQLException {
-//        try {
-//            String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
-//            PreparedStatement ps = JDBC.connection.prepareCall(sql);
-//            ps.setString(1, customer.getName());
-//            ps.setString(2, customer.getAddress());
-//            ps.setString(3, customer.getPostal());
-//            ps.setString(4, customer.getPhone());
-//            ps.setInt(5, customer.getDivisionId());
-//            ps.setInt(6, customer.getId());
-//            ps.executeUpdate();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//    }
+    public static void updateCustomer(Customer customer) throws SQLException {
+        try {
+            String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareCall(sql);
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getAddress());
+            ps.setString(3, customer.getPostal());
+            ps.setString(4, customer.getPhone());
+            ps.setInt(5, getDivisionId(customer.getDivision()));
+            ps.setInt(6, customer.getId());
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     public static void deleteCustomer(Customer customer) throws SQLException {
         try {

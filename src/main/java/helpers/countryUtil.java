@@ -22,7 +22,18 @@ public class countryUtil {
             Country country = new Country(id, name);
             countryList.add(country);
         }
-        System.out.println(countryList);
         return countryList;
+    }
+
+    public static int getCountryId(String country) throws SQLException {
+        String sql = "SELECT Country_ID FROM countries WHERE Country = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall((sql));
+        ps.setString(1, country);
+        ResultSet rs = ps.executeQuery();
+        int countryId = 0;
+        while (rs.next()) {
+            countryId = rs.getInt("Country_ID");
+        }
+        return countryId;
     }
 }

@@ -1,6 +1,8 @@
 package wardlaw.mainscreen;
 
 import helpers.customerUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+
 public class customerController implements Initializable {
     @FXML
     private TableView<Customer> customersTable;
@@ -36,6 +39,15 @@ public class customerController implements Initializable {
     @FXML
     private TableColumn<Customer, String> colCustPhone;
 
+    private ObservableList<Customer> customerList = FXCollections.observableArrayList();
+
+
+    public static Customer selectedCustomer;
+
+    public static Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
         Scene scene = new Scene(parent);
@@ -45,6 +57,7 @@ public class customerController implements Initializable {
     }
 
     public void update(ActionEvent actionEvent) throws IOException {
+        selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("customerUpdate.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -63,7 +76,8 @@ public class customerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            customersTable.setItems(customerUtil.getCustomers());
+            customerList = customerUtil.getCustomers();
+            customersTable.setItems(customerList);
             colCustName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
             colCustDivision.setCellValueFactory(new PropertyValueFactory<>("division"));
@@ -75,6 +89,22 @@ public class customerController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public void delete() throws SQLException {
+        // TODO: Alert/error handling
+        selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
+        customerUtil.deleteCustomer(selectedCustomer);
+        customerList = customerUtil.getCustomers();
+        customersTable.setItems(customerList);
+        colCustName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        colCustDivision.setCellValueFactory(new PropertyValueFactory<>("division"));
+        colCustCountry.setCellValueFactory(new PropertyValueFactory<>("country"));
+        colCustAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colCustPostal.setCellValueFactory(new PropertyValueFactory<>("postal"));
+        colCustPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
     }
 }

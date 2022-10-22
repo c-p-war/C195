@@ -25,7 +25,7 @@
         <Label fx:id="labelCustPhone" layoutX="14.0" layoutY="293.0" text="Phone"/>
         <TextField fx:id="txtFieldCustId" disable="true" editable="false" layoutX="89.0" layoutY="85.0"/>
         <TextField fx:id="txtFieldCustName" layoutX="89.0" layoutY="119.0"/>
-        <ComboBox fx:id="comboCustCountry" layoutX="89.0" layoutY="153.0" prefWidth="150.0"/>
+        <ComboBox fx:id="comboCustCountry" layoutX="89.0" layoutY="153.0" prefWidth="150.0" onAction="#setDivisions"/>
         <ComboBox fx:id="comboCustDivision" layoutX="89.0" layoutY="187.0" prefWidth="150.0"/>
         <TextField fx:id="txtFieldCustAddress" layoutX="89.0" layoutY="221.0"/>
         <TextField fx:id="txtFieldCustPostal" layoutX="89.0" layoutY="255.0"/>
@@ -33,6 +33,7 @@
         <Label fx:id="labelCustAdd" layoutX="5.0" layoutY="6.0" text="Add Customer"/>
         <Button fx:id="btnCancel" layoutX="89.0" layoutY="335.0" mnemonicParsing="false" onAction="#cancel"
                 text="Cancel"/>
-        <Button fx:id="btnSubmit" layoutX="194.0" layoutY="336.0" mnemonicParsing="false" text="Submit"/>
+        <Button fx:id="btnSubmit" layoutX="194.0" layoutY="336.0" mnemonicParsing="false" onAction="#submit"
+                text="Submit"/>
     </children>
 </AnchorPane>

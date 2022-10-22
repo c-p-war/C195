@@ -1,6 +1,10 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Customer {
+    private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private int id;
     private String name;
     private String address;
@@ -74,6 +78,10 @@ public class Customer {
 
     public void setDivision(String division) {
         this.division = division;
+    }
+
+    public ObservableList<Customer> getAllCustomers() {
+        return allCustomers;
     }
 
 }
