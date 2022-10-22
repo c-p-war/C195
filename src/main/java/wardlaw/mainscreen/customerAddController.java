@@ -47,8 +47,9 @@ public class customerAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            incrementInterface intStart = n -> n + 1;
             int customerCount = customerUtil.getCustomers().size();
-            txtFieldCustId.setText(String.valueOf(customerCount + 1));
+            txtFieldCustId.setText(String.valueOf(intStart.increment(customerCount)));
             for (Country country : countryUtil.getCountries()) {
                 comboListCountries.add(country.getCountry());
             }

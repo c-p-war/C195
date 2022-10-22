@@ -57,8 +57,10 @@ public class appointmentsAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            // LAMBDA #2
+            incrementInterface intStart = n -> n + 1;
             int apptCount = appointmentsUtil.getAppointments().size();
-            txtFieldId.setText(String.valueOf(apptCount + 1));
+            txtFieldId.setText(String.valueOf(intStart.increment(apptCount)));
             for (Contact contact : contactUtil.getContacts()){
                 comboListContacts.add(contact.getName());
             }

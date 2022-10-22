@@ -42,7 +42,7 @@ public class loginController implements Initializable {
     private DateTimeFormatter datetimeDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     private final ZoneId localZoneId = ZoneId.systemDefault();
 
-    public void login(ActionEvent actionEvent)  throws IOException, SQLException {
+    public void login(ActionEvent actionEvent) throws IOException, SQLException {
         String userName = txtFieldUsername.getText();
         String password = txtFieldPassword.getText();
 //        if (util.checkUsers(userName, password).size() > 0) {
@@ -54,14 +54,16 @@ public class loginController implements Initializable {
 //                // TODO: Verify time conversion
 //                LocalDateTime start = alert.getStart();
 //                String txt = "\n\nAppointment within 15 minutes.\nID: " + id + "\nStart Date/Time: " + start;
-//                util.stringToAlert(txt);
+        // LAMBDA #1
+//        alertInterface withinFifteen = () -> "\n\nAppointment within 15 minutes.\nID: " + id + "\nStart Date/Time: " + start;
+//        util.stringToAlert(withinFifteen.alert());
 //            }
-            // Navigate to main
-            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
-            Scene scene = new Scene(parent);
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+        // Navigate to main
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
 //        } else {
 //            util.stringToError("Unsuccessful login.\n\n Try again");
 //            writeActivity("Unsuccessful Login - User: Test | Time: ");
