@@ -43,4 +43,28 @@ public class divisionUtil {
         }
         return divisionList;
     }
+
+    public static String getDivisionName(int divisionId) throws SQLException {
+        String sql = "SELECT Division FROM first_level_divisions WHERE Division_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall((sql));
+        ps.setInt(1, divisionId);
+        ResultSet rs = ps.executeQuery();
+        String divisionName = null;
+        while (rs.next()) {
+            divisionName = rs.getString("Division");
+        }
+        return divisionName;
+    }
+
+    public static int getDivisionId(String divisionName) throws SQLException {
+        String sql = "SELECT Division_ID FROM first_level_divisions WHERE Division = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall((sql));
+        ps.setString(1, divisionName);
+        ResultSet rs = ps.executeQuery();
+        int divisionId = 0;
+        while (rs.next()) {
+            divisionId = rs.getInt("Division_ID");
+        }
+        return divisionId;
+    }
 }

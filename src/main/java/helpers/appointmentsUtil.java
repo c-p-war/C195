@@ -1,6 +1,5 @@
 package helpers;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
@@ -169,7 +168,6 @@ public class appointmentsUtil {
             int monthInt = rs.getInt("month");
             int count = rs.getInt("count");
             String monthString = null;
-            // TODO: Add other months
             switch (monthInt) {
                 case 1:
                     monthString = "January";
@@ -177,11 +175,35 @@ public class appointmentsUtil {
                 case 2:
                     monthString = "February";
                     break;
+                case 3:
+                    monthString = "March";
+                    break;
+                case 4:
+                    monthString = "April";
+                    break;
                 case 5:
                     monthString = "May";
                     break;
+                case 6:
+                    monthString = "June";
+                    break;
+                case 7:
+                    monthString = "July";
+                    break;
+                case 8:
+                    monthString = "August";
+                    break;
+                case 9:
+                    monthString = "September";
+                    break;
                 case 10:
                     monthString = "October";
+                    break;
+                case 11:
+                    monthString = "November";
+                    break;
+                case 12:
+                    monthString = "December";
                     break;
             }
             ReportMonth report = new ReportMonth(monthInt, monthString, count);

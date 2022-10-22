@@ -10,6 +10,8 @@ import java.sql.SQLException;
 
 public class customerUtil {
 
+    // TODO: Clean up utilities, remove unused code, place methods where more appropriate etc.
+
     public static String getDivisionName(int divisionId) throws SQLException {
         String sql = "SELECT Division FROM first_level_divisions WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareCall((sql));
