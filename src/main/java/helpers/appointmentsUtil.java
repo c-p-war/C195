@@ -1,9 +1,11 @@
 package helpers;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
 import model.ReportMonth;
+import model.ReportType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -128,34 +130,35 @@ public class appointmentsUtil {
         ps.executeUpdate();
     }
 
-    public static ArrayList<String> getDistinctTypes() throws SQLException {
-        String sql = "SELECT DISTINCT Type FROM appointments";
+    public static ObservableList<ReportType> getDistinctTypes() throws SQLException {
+        String sql = "SELECT DISTINCT Type, count(Type) as ? FROM appointments GROUP BY Type";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, "count");
         ResultSet rs = ps.executeQuery();
-        ArrayList<String> distinctTypes = new ArrayList();
+        ObservableList<ReportType> distinctTypes = FXCollections.observableArrayList();
         while (rs.next()) {
             String type = rs.getString("Type");
-            distinctTypes.add(type);
+            int count = rs.getInt("count");
+            ReportType reportType = new ReportType(type, count);
+            distinctTypes.add(reportType);
         }
-        // TODO: Lambda?
-        System.out.println(distinctTypes);
         return distinctTypes;
     }
 
-    public static int countTypes(String in_type) throws SQLException {
-        String sql = "SELECT COUNT(*) AS ? FROM appointments WHERE Type = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, "count");
-        ps.setString(2, in_type);
-        ps.executeQuery();
-        ResultSet rs = ps.executeQuery();
-        ArrayList<Integer> distinctCount = new ArrayList();
-        while (rs.next()) {
-            int count = rs.getInt("count");
-            distinctCount.add(count);
-        }
-        return distinctCount.get(0);
-    }
+//    public static int countTypes(String in_type) throws SQLException {
+//        String sql = "SELECT COUNT(*) AS ? FROM appointments WHERE Type = ?";
+//        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+//        ps.setString(1, "count");
+//        ps.setString(2, in_type);
+//        ps.executeQuery();
+//        ResultSet rs = ps.executeQuery();
+//        ArrayList<Integer> distinctCount = new ArrayList();
+//        while (rs.next()) {
+//            int count = rs.getInt("count");
+//            distinctCount.add(count);
+//        }
+//        return distinctCount.get(0);
+//    }
 
     public static ObservableList<ReportMonth> reportMonths() throws SQLException {
         String sql = "SELECT MONTH(Start) AS ?,COUNT(*) AS ? FROM appointments GROUP BY MONTH(Start)";

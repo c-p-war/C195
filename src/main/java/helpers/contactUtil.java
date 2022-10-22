@@ -29,10 +29,10 @@ public class contactUtil {
     }
 
     // TODO: Lambda? Integrate the method above?
-    public static ObservableList<ReportContact> reportContacts() throws SQLException {
-        String reportContactAppts = "SELECT Appointment_ID, Title, Type, Description, Start, ?, Customer_ID FROM appointments WHERE Contact_ID = ?;";
+    public static ObservableList<ReportContact> reportContacts(int contactId) throws SQLException {
+        String reportContactAppts = "SELECT Appointment_ID, Title, Type, Description, Start, End, Customer_ID FROM appointments WHERE Contact_ID = ?;";
         PreparedStatement ps = JDBC.connection.prepareCall((reportContactAppts));
-        ps.setString(1, "End");
+        ps.setInt(1, contactId);
         ResultSet rs = ps.executeQuery();
         ObservableList<ReportContact> contactReport = FXCollections.observableArrayList();
 
@@ -47,9 +47,9 @@ public class contactUtil {
             ReportContact appt = new ReportContact(id, title, type, description, start, end, customerId);
             contactReport.add(appt);
         }
-        System.out.println(contactReport);
         return contactReport;
     }
+
 
     public static String getContactName(int contactId) throws SQLException {
         String sql = "SELECT Contact_Name FROM contacts WHERE Contact_ID = ?";
