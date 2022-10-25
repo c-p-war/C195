@@ -22,8 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
@@ -40,11 +39,31 @@ public class loginController implements Initializable {
     public Label labelZoneId;
 
     private DateTimeFormatter datetimeDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-    private final ZoneId localZoneId = ZoneId.systemDefault();
+
 
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
         String userName = txtFieldUsername.getText();
         String password = txtFieldPassword.getText();
+
+//        LocalDate myLD = LocalDate.of(2020, 10, 11);
+//        LocalTime myLT = LocalTime.of(22, 0);
+//
+//        LocalDateTime myLDT = LocalDateTime.of(myLD, myLT);
+//        // 1. String to LDT, get it working
+//        System.out.println(myLDT);
+//        ZoneId myZoneID = ZoneId.systemDefault();
+//        ZonedDateTime myZDT = ZonedDateTime.of(myLDT, myZoneID);
+////        System.out.println("User time: " + myZDT);
+//        ZoneId utcZoneId = ZoneId.of("UTC");
+//        // Local Time -> UTC
+//        ZonedDateTime utcZDT = ZonedDateTime.ofInstant(myZDT.toInstant(), utcZoneId);
+//        System.out.println("Local Time to UTC: " + utcZDT.toLocalDate().toString() + " " + utcZDT.toLocalTime().toString());
+//        // UTC -> Local Time
+//        myZDT = ZonedDateTime.ofInstant(utcZDT.toInstant(), myZoneID);
+//        System.out.println("UTC to User Time: " + myZDT.toLocalDate().toString() + " " + myZDT.toLocalTime().toString());
+
+
+
 //        if (util.checkUsers(userName, password).size() > 0) {
 //            writeActivity("Successful Login - User: Test | Time: ");
 //            ObservableList<Appointment> comingSoon = appointmentsUtil.getFifteen();
@@ -82,6 +101,6 @@ public class loginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        labelZoneId.setText("Local Zone ID: " + localZoneId);
+//        labelZoneId.setText("Local Zone ID: " + localZoneId);
     }
 }

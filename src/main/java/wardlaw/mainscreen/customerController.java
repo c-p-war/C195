@@ -1,6 +1,7 @@
 package wardlaw.mainscreen;
 
 import helpers.customerUtil;
+import helpers.util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -58,11 +59,15 @@ public class customerController implements Initializable {
 
     public void update(ActionEvent actionEvent) throws IOException {
         selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("customerUpdate.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        if (selectedCustomer == null) {
+            util.stringToError("No customer selected");
+        } else {
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("customerUpdate.fxml")));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void add(ActionEvent actionEvent) throws IOException {
@@ -105,6 +110,6 @@ public class customerController implements Initializable {
         colCustAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colCustPostal.setCellValueFactory(new PropertyValueFactory<>("postal"));
         colCustPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-
+        util.stringToAlert("Customer, " + selectedCustomer.getName() + ", was deleted");
     }
 }

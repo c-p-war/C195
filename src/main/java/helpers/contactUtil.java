@@ -27,8 +27,6 @@ public class contactUtil {
         System.out.println(contactList);
         return contactList;
     }
-
-    // TODO: Lambda? Integrate the method above?
     public static ObservableList<ReportContact> reportContacts(int contactId) throws SQLException {
         String reportContactAppts = "SELECT Appointment_ID, Title, Type, Description, Start, End, Customer_ID FROM appointments WHERE Contact_ID = ?;";
         PreparedStatement ps = JDBC.connection.prepareCall((reportContactAppts));
@@ -41,8 +39,8 @@ public class contactUtil {
             String title = rs.getString("Title");
             String type = rs.getString("Type");
             String description = rs.getString("Description");
-            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            String start = util.utcToLocal(rs.getTimestamp("Start").toLocalDateTime());
+            String end = util.utcToLocal(rs.getTimestamp("End").toLocalDateTime());
             int customerId = rs.getInt("Customer_ID");
             ReportContact appt = new ReportContact(id, title, type, description, start, end, customerId);
             contactReport.add(appt);

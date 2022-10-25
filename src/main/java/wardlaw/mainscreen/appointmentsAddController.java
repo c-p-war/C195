@@ -2,6 +2,8 @@ package wardlaw.mainscreen;
 
 import helpers.appointmentsUtil;
 import helpers.contactUtil;
+import helpers.customerUtil;
+import helpers.util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,11 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.Contact;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -60,8 +64,10 @@ public class appointmentsAddController implements Initializable {
             // LAMBDA #2
             incrementInterface intStart = n -> n + 1;
             int apptCount = appointmentsUtil.getAppointments().size();
+            System.out.println("apptCount: " + apptCount);
+            System.out.println("incremented: " + intStart.increment(apptCount));
             txtFieldId.setText(String.valueOf(intStart.increment(apptCount)));
-            for (Contact contact : contactUtil.getContacts()){
+            for (Contact contact : contactUtil.getContacts()) {
                 comboListContacts.add(contact.getName());
             }
             comboContact.setItems(comboListContacts);
@@ -70,17 +76,38 @@ public class appointmentsAddController implements Initializable {
         }
     }
 
-    public void submit(ActionEvent actionEvent) {
+    public void submit(ActionEvent actionEvent) throws IOException, SQLException {
         int id = Integer.parseInt(txtFieldId.getText());
         String title = txtFieldTitle.getText();
         String description = txtFieldDescr.getText();
         String location = txtFieldLoc.getText();
         String contact = comboContact.getValue();
         String type = txtFieldType.getText();
-        // TODO: Date/time conversion
-//        String start = LocalDateTime.txtFieldStart.getText();
-//        String end = txtFieldEnd.getText();
+        LocalDateTime ldt_start = util.getLdtFromString(txtFieldStart.getText());
+        LocalDateTime ldt_end = util.getLdtFromString(txtFieldEnd.getText());
+
+        String start = util.localToUTC(ldt_start);
+        String end = util.localToUTC(ldt_end);
+
         int customerId = Integer.parseInt(txtFieldCustId.getText());
         int userId = Integer.parseInt(txtFieldUserId.getText());
+        int zdt_start = util.localToEST(ldt_start).getHour();
+        int zdt_end = util.localToEST(ldt_end).getHour();
+        ObservableList<Appointment> appointments = customerUtil.getCustomerAppointments(customerId);
+        for (Appointment a : appointments) {
+            LocalDateTime a_start = util.getLdtFromString(a.getStart());
+            LocalDateTime a_end = util.getLdtFromString(a.getEnd());
+            if (a_start.isBefore(ldt_end) && (ldt_start.isBefore(a_end))) {
+                util.stringToAlert("Block already booked");
+            }
+        }
+        if (zdt_start < 8 || zdt_start >= 22 || zdt_end < 8 || zdt_end >= 22) {
+            System.out.println("Incorrect time");
+            util.stringToError("Time must be between 8:00AM EST and 10:00PM EST");
+        } else {
+            Appointment newAppointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contact);
+            appointmentsUtil.addAppointment(newAppointment);
+            cancel(actionEvent);
+        }
     }
 }

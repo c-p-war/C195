@@ -2,6 +2,7 @@ package helpers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Appointment;
 import model.Customer;
 
 import java.sql.PreparedStatement;
@@ -9,9 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class customerUtil {
-
-    // TODO: Clean up utilities, remove unused code, place methods where more appropriate etc.
-
     public static String getDivisionName(int divisionId) throws SQLException {
         String sql = "SELECT Division FROM first_level_divisions WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareCall((sql));
@@ -61,8 +59,6 @@ public class customerUtil {
     }
 
 
-
-
     public static ObservableList<Customer> getCustomers() throws SQLException {
         String getCustomer = " SELECT * FROM customers";
         PreparedStatement ps = JDBC.connection.prepareCall(getCustomer);
@@ -81,6 +77,31 @@ public class customerUtil {
             customerList.add(customer);
         }
         return customerList;
+    }
+
+    public static ObservableList<Appointment> getCustomerAppointments(int in_customerId) throws SQLException {
+        String sql = "SELECT * FROM appointments WHERE Customer_Id = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall(sql);
+        ps.setInt(1, in_customerId);
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Appointment> appointmentsList = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            String start = util.utcToLocal(rs.getTimestamp("Start").toLocalDateTime());
+            String end = util.utcToLocal(rs.getTimestamp("End").toLocalDateTime());
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            String contactName = contactUtil.getContactName(rs.getInt("Contact_ID"));
+            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactName);
+            appointmentsList.add(appointment);
+        }
+        System.out.println(appointmentsList);
+        return appointmentsList;
     }
 // TODO: Correct division id
     // TODO: Add country
@@ -118,7 +139,7 @@ public class customerUtil {
             ps.setString(3, customer.getAddress());
             ps.setString(4, customer.getPostal());
             ps.setString(5, customer.getPhone());
-            ps.setInt(6,getDivisionId(customer.getDivision()));
+            ps.setInt(6, getDivisionId(customer.getDivision()));
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

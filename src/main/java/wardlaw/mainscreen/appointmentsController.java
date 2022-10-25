@@ -43,9 +43,9 @@ public class appointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> coldApptType;
     @FXML
-    private TableColumn<Appointment, LocalDateTime> colApptStart;
+    private TableColumn<Appointment, String> colApptStart;
     @FXML
-    private TableColumn<Appointment, LocalDateTime> colApptEnd;
+    private TableColumn<Appointment, String> colApptEnd;
     @FXML
     private TableColumn<Appointment, Integer> colApptCustId;
     @FXML
@@ -54,7 +54,10 @@ public class appointmentsController implements Initializable {
     private RadioButton radioBtnAll;
 
     public static Appointment selectedAppointment;
-    public static Appointment getSelectedAppointment(){return selectedAppointment;}
+
+    public static Appointment getSelectedAppointment() {
+        return selectedAppointment;
+    }
 
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
@@ -66,11 +69,15 @@ public class appointmentsController implements Initializable {
 
     public void update(ActionEvent actionEvent) throws IOException {
         selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("appointmentsUpdate.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        if (selectedAppointment == null) {
+            util.stringToError("No appointment selected");
+        } else {
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("appointmentsUpdate.fxml")));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void add(ActionEvent actionEvent) throws IOException {
@@ -162,6 +169,6 @@ public class appointmentsController implements Initializable {
         colApptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         colApptCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
-
+        util.stringToAlert("The following appointment was deleted:\nAppointment ID: " + selectedAppointment.getId() + "\nType: " + selectedAppointment.getType());
     }
 }

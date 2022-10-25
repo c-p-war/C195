@@ -8,11 +8,11 @@ public class ReportContact {
     private String title;
     private String type;
     private String description;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private String start;
+    private String end;
     private int customerId;
 
-    public ReportContact(int id, String title, String type, String description, LocalDateTime start, LocalDateTime end, int customerId) {
+    public ReportContact(int id, String title, String type, String description, String start, String end, int customerId) {
         this.id = id;
         this.title = title;
         this.type = type;
@@ -54,19 +54,19 @@ public class ReportContact {
         this.description = description;
     }
 
-    public LocalDateTime getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public LocalDateTime getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDateTime end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 

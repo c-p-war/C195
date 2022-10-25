@@ -16,7 +16,7 @@
         <TextField fx:id="txtFieldId" disable="true" editable="false" layoutX="89.0" layoutY="85.0" />
         <TextField fx:id="txtFieldTitle" layoutX="89.0" layoutY="119.0" />
         <TextField fx:id="txtFieldType" layoutX="89.0" layoutY="255.0" />
-        <TextField fx:id="txtFieldStart" layoutX="89.0" layoutY="289.0" />
+        <TextField fx:id="txtFieldStart" layoutX="89.0" layoutY="289.0" promptText="YYYY-MM-DD HH:MM" />
         <Button fx:id="btnCancel" layoutX="88.0" layoutY="450.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
         <Button fx:id="btnSubmit" layoutX="193.0" layoutY="451.0" mnemonicParsing="false" onAction="#submit" text="Submit" />
         <Label fx:id="labelEnd" layoutX="13.0" layoutY="324.0" text="End Date" />
@@ -25,7 +25,7 @@
         <ComboBox fx:id="comboContact" layoutX="88.0" layoutY="221.0" prefWidth="150.0" />
         <TextField fx:id="txtFieldLoc" layoutX="89.0" layoutY="187.0" />
         <TextField fx:id="txtFieldDescr" layoutX="89.0" layoutY="153.0" />
-        <TextField fx:id="txtFieldEnd" layoutX="89.0" layoutY="320.0" />
+        <TextField fx:id="txtFieldEnd" layoutX="89.0" layoutY="320.0" promptText="YYYY-MM-DD HH:MM" />
         <TextField fx:id="txtFieldCustId" layoutX="89.0" layoutY="354.0" />
         <TextField fx:id="txtFieldUserId" layoutX="89.0" layoutY="388.0" />
     </children>

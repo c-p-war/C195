@@ -1,6 +1,9 @@
 package wardlaw.mainscreen;
 
+import helpers.appointmentsUtil;
 import helpers.contactUtil;
+import helpers.customerUtil;
+import helpers.util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,20 +58,54 @@ public class appointmentsUpdateController implements Initializable {
         stage.show();
     }
 
-    public void save(ActionEvent actionEvent) {
+    public void save(ActionEvent actionEvent) throws IOException, SQLException {
         int id = Integer.parseInt(txtFieldId.getText());
         String title = txtFieldTitle.getText();
         String description = txtFieldDescr.getText();
         String location = txtFieldLoc.getText();
         String contact = comboContact.getValue();
         String type = txtFieldType.getText();
-        // TODO: Date/time conversion
-//        String start = LocalDateTime.txtFieldStart.getText();
-//        String end = txtFieldEnd.getText();
+        LocalDateTime start = util.getLdtFromString(txtFieldStart.getText());
+        LocalDateTime end = util.getLdtFromString(txtFieldEnd.getText());
         int customerId = Integer.parseInt(txtFieldCustId.getText());
         int userId = Integer.parseInt(txtFieldUserId.getText());
-//        Appointment updateAppointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contact);
-
+        int zdt_start = util.localToEST(start).getHour();
+        int zdt_end = util.localToEST(end).getHour();
+        ObservableList<Appointment> appointments = customerUtil.getCustomerAppointments(customerId);
+        boolean overlap = false;
+        boolean outOfOffice = false;
+        // Set overlap
+        for (Appointment a : appointments) {
+            if (a.getId() != id) {
+                LocalDateTime a_start = util.getLdtFromString(a.getStart());
+                LocalDateTime a_end = util.getLdtFromString(a.getEnd());
+                if (a_start.isBefore(end) && (start.isBefore(a_end))) {
+                    overlap = true;
+                }
+            }
+        }
+        // Set outOfOffice
+        if (zdt_start < 8 || zdt_start >= 22 || zdt_end < 8 || zdt_end >= 22) {
+            outOfOffice = true;
+        }
+        // Check overlap
+        if (overlap){
+            util.stringToError("Appointment overlap");
+        }
+        // Check out of office
+        if (outOfOffice){
+            util.stringToError("Times must be between 8AM EST and 10PM EST");
+        }
+        // Update appointment if conditions are met
+        if (!overlap && !outOfOffice){
+            // Convert to UTC for DB storage
+            String utc_start = util.localToUTC(start);
+            System.out.println("Update Start: " + utc_start);
+            String utc_end = util.localToUTC(end);
+            Appointment newAppointment = new Appointment(id, title, description, location, type, utc_start, utc_end, customerId, userId, contact);
+            appointmentsUtil.updateAppointment(newAppointment);
+            cancel(actionEvent);
+        }
     }
 
     @Override
@@ -77,11 +114,10 @@ public class appointmentsUpdateController implements Initializable {
         txtFieldId.setText(String.valueOf(selectedAppointment.getId()));
         txtFieldTitle.setText(selectedAppointment.getTitle());
         txtFieldType.setText(selectedAppointment.getType());
-        // TODO: Date/time conversion
-        txtFieldStart.setText(String.valueOf(selectedAppointment.getStart()));
-        txtFieldEnd.setText(String.valueOf(selectedAppointment.getEnd()));
+        txtFieldStart.setText(selectedAppointment.getStart());
+        txtFieldEnd.setText(selectedAppointment.getEnd());
         try {
-            for (Contact contact : contactUtil.getContacts()){
+            for (Contact contact : contactUtil.getContacts()) {
                 comboListContacts.add(contact.getName());
             }
             comboContact.setValue(selectedAppointment.getContactName());
@@ -89,11 +125,9 @@ public class appointmentsUpdateController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-//        comboContact
         txtFieldLoc.setText(selectedAppointment.getLocation());
         txtFieldDescr.setText(selectedAppointment.getDescription());
         txtFieldCustId.setText(String.valueOf(selectedAppointment.getCustomerId()));
         txtFieldUserId.setText(String.valueOf(selectedAppointment.getUserId()));
-        System.out.println(selectedAppointment);
     }
 }

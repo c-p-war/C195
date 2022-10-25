@@ -9,12 +9,14 @@ import java.lang.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class util {
+    private static ZoneId sysZoneId = ZoneId.systemDefault();
+    private static ZoneId utcZoneId = ZoneId.of("UTC");
+    private static DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     public static ObservableList<User> checkUsers(String userName, String in_password) throws SQLException {
         String sql = "SELECT * FROM users WHERE User_Name = ? AND Password =?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -50,17 +52,25 @@ public class util {
         return alert;
     }
 
-    public static java.sql.Timestamp getTimeStamp() {
-        ZoneId zoneid = ZoneId.of("UTC");
-        LocalDateTime localDateTime = LocalDateTime.now(zoneid);
-        java.sql.Timestamp timeStamp = Timestamp.valueOf(localDateTime);
-        return timeStamp;
+    public static LocalDateTime getLdtFromString(String dateTime) {
+        LocalDateTime converted = LocalDateTime.parse(dateTime, dt);
+        return converted;
     }
-
-    public static java.sql.Date getDate() {
-        java.sql.Date date = java.sql.Date.valueOf(LocalDate.now());
-        return date;
+    // EST Time, used to check against office hours for submission
+    public static LocalDateTime localToEST(LocalDateTime ldt) {
+        ZoneId estZoneId = ZoneId.of("America/New_York");
+        ZonedDateTime sysZDT = ZonedDateTime.of(ldt, sysZoneId);
+        ZonedDateTime estZDT = ZonedDateTime.ofInstant(sysZDT.toInstant(), estZoneId);
+        return getLdtFromString(estZDT.format(dt));
     }
-
-
+    public static String localToUTC(LocalDateTime ldt) {
+        ZonedDateTime sysZDT = ZonedDateTime.of(ldt, sysZoneId);
+        ZonedDateTime utcZDT = ZonedDateTime.ofInstant(sysZDT.toInstant(), utcZoneId);
+        return utcZDT.format(dt);
+    }
+    public static String utcToLocal(LocalDateTime ldt) {
+        ZonedDateTime utcZDT = ZonedDateTime.of(ldt, utcZoneId);
+        ZonedDateTime sysZDT = ZonedDateTime.ofInstant(utcZDT.toInstant(), sysZoneId);
+        return sysZDT.format(dt);
+    }
 }
