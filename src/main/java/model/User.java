@@ -1,10 +1,20 @@
 package model;
 
+/**
+ * User object model
+ */
 public class User {
     private int id;
     private String userName;
     private String password;
 
+    /**
+     * User constructor
+     *
+     * @param id
+     * @param userName
+     * @param password
+     */
     public User(int id, String userName, String password) {
         this.id = id;
         this.userName = userName;

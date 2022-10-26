@@ -9,7 +9,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Utility methods for the Customer object. Holds SQL statements.
+ */
 public class customerUtil {
+    /**
+     * @param divisionId
+     * @return Division name based on the given divisionId
+     * @throws SQLException
+     */
     public static String getDivisionName(int divisionId) throws SQLException {
         String sql = "SELECT Division FROM first_level_divisions WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareCall((sql));
@@ -22,6 +30,11 @@ public class customerUtil {
         return divisionName;
     }
 
+    /**
+     * @param divisionName
+     * @return Division ID based on the given divisionName
+     * @throws SQLException
+     */
     public static int getDivisionId(String divisionName) throws SQLException {
         String sql = "SELECT Division_ID FROM first_level_divisions WHERE Division = ?";
         PreparedStatement ps = JDBC.connection.prepareCall((sql));
@@ -34,6 +47,11 @@ public class customerUtil {
         return divisionId;
     }
 
+    /**
+     * @param divisionId
+     * @return Country name for a given division id
+     * @throws SQLException
+     */
     public static String getCountryName(int divisionId) throws SQLException {
         String sql = "SELECT Country FROM countries AS c JOIN first_level_divisions AS s ON s.Country_ID = c.Country_ID  WHERE s.Division_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareCall((sql));
@@ -46,6 +64,11 @@ public class customerUtil {
         return countryName;
     }
 
+    /**
+     * @param divisionId
+     * @return Country ID for a given division ID
+     * @throws SQLException
+     */
     public static int getCountryId(int divisionId) throws SQLException {
         String sql = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareCall((sql));
@@ -58,7 +81,10 @@ public class customerUtil {
         return countryId;
     }
 
-
+    /**
+     * @return All customers from the DB
+     * @throws SQLException
+     */
     public static ObservableList<Customer> getCustomers() throws SQLException {
         String getCustomer = " SELECT * FROM customers";
         PreparedStatement ps = JDBC.connection.prepareCall(getCustomer);
@@ -79,6 +105,11 @@ public class customerUtil {
         return customerList;
     }
 
+    /**
+     * @param in_customerId
+     * @return Appointments from the database that have the provided customerId
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getCustomerAppointments(int in_customerId) throws SQLException {
         String sql = "SELECT * FROM appointments WHERE Customer_Id = ?";
         PreparedStatement ps = JDBC.connection.prepareCall(sql);
@@ -104,6 +135,11 @@ public class customerUtil {
         return appointmentsList;
     }
 
+    /**
+     * Adds a customer to the DB
+     *
+     * @param customer
+     */
     public static void addCustomer(Customer customer) {
         try {
             String sql = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?, ?)";
@@ -120,6 +156,11 @@ public class customerUtil {
         }
     }
 
+    /**
+     * Updates the selected customer in the DB
+     *
+     * @param customer
+     */
     public static void updateCustomer(Customer customer) {
         try {
             String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
@@ -136,6 +177,11 @@ public class customerUtil {
         }
     }
 
+    /**
+     * Deletes the selected customer from the DB
+     *
+     * @param customer
+     */
     public static void deleteCustomer(Customer customer) {
         try {
             String deleteAppointments = "DELETE FROM appointments WHERE Customer_ID = ?";

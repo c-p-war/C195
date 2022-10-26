@@ -49,7 +49,11 @@ public class appointmentsAddController implements Initializable {
     public TextField txtFieldUserId;
     ObservableList<String> comboListContacts = FXCollections.observableArrayList();
 
-
+    /**
+     * Returns the user to the previous screen
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("appointments.fxml")));
         Scene scene = new Scene(parent);
@@ -58,6 +62,12 @@ public class appointmentsAddController implements Initializable {
         stage.show();
     }
 
+    /**
+     * LAMBDA 2
+     * Auto increments the appointment id via Lambda expression. Populates the id field, and contacts combo box
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -74,6 +84,12 @@ public class appointmentsAddController implements Initializable {
         }
     }
 
+    /**
+     * Places the appointment in the DB. Performs input validation
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void submit(ActionEvent actionEvent) throws IOException, SQLException {
         int id = Integer.parseInt(txtFieldId.getText());
         String title = txtFieldTitle.getText();

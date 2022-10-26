@@ -12,7 +12,11 @@ import java.sql.SQLException;
 import java.util.Locale;
 
 public class main extends Application {
-
+    /**
+     * Starts the application and navigates to the login screen
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("login.fxml"));
@@ -22,6 +26,11 @@ public class main extends Application {
         stage.show();
     }
 
+    /**
+     * Opens the DB connection
+     * @param args
+     * @throws SQLException
+     */
     public static void main(String[] args) throws SQLException {
 //        Locale.setDefault(new Locale("fr"));
         JDBC.openConnection();

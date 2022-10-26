@@ -1,11 +1,20 @@
 package model;
 
+/**
+ * ReportMonth object model. Used in the Appoint by Month and Type report
+ */
 public class ReportMonth {
     private String type;
     private int count;
     private String month;
 
-
+    /**
+     * ReportMonth constructor. Used to generate the Appointments by Type and Month report.
+     *
+     * @param type
+     * @param month
+     * @param count
+     */
     public ReportMonth(String type, String month, int count) {
         this.type = type;
         this.month = month;

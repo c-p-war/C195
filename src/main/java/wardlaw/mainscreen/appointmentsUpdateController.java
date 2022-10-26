@@ -49,7 +49,12 @@ public class appointmentsUpdateController implements Initializable {
     public TextField txtFieldUserId;
     ObservableList<String> comboListContacts = FXCollections.observableArrayList();
 
-
+    /**
+     * Returns the user to the previous screen
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("appointments.fxml")));
         Scene scene = new Scene(parent);
@@ -58,6 +63,13 @@ public class appointmentsUpdateController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Sends the updated appointment to the DB. Performs input validation.
+     *
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void save(ActionEvent actionEvent) throws IOException, SQLException {
         int id = Integer.parseInt(txtFieldId.getText());
         String title = txtFieldTitle.getText();
@@ -89,15 +101,15 @@ public class appointmentsUpdateController implements Initializable {
             outOfOffice = true;
         }
         // Check overlap
-        if (overlap){
+        if (overlap) {
             util.stringToError("Appointment overlap");
         }
         // Check out of office
-        if (outOfOffice){
+        if (outOfOffice) {
             util.stringToError("Times must be between 8AM EST and 10PM EST");
         }
         // Update appointment if conditions are met
-        if (!overlap && !outOfOffice){
+        if (!overlap && !outOfOffice) {
             // Convert to UTC for DB storage
             String utc_start = util.localToUTC(start);
             String utc_end = util.localToUTC(end);
@@ -107,6 +119,12 @@ public class appointmentsUpdateController implements Initializable {
         }
     }
 
+    /**
+     * Sets the text fields for the update appointment form based on the selected appointment from the previous screen
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Appointment selectedAppointment = appointmentsController.getSelectedAppointment();

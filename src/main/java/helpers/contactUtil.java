@@ -8,9 +8,15 @@ import model.ReportContact;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
+/**
+ * Utility for the Contact object. Holds SQL statements.
+ */
 public class contactUtil {
+    /**
+     * @return All contacts from the db
+     * @throws SQLException
+     */
     public static ObservableList<Contact> getContacts() throws SQLException {
         String getContacts = "SELECT * FROM contacts";
         PreparedStatement ps = JDBC.connection.prepareCall((getContacts));
@@ -27,6 +33,12 @@ public class contactUtil {
         System.out.println(contactList);
         return contactList;
     }
+
+    /**
+     * @param contactId
+     * @return Appointments for the report 'Contact Schedule' based on the provided contactId
+     * @throws SQLException
+     */
     public static ObservableList<ReportContact> reportContacts(int contactId) throws SQLException {
         String reportContactAppts = "SELECT Appointment_ID, Title, Type, Description, Start, End, Customer_ID FROM appointments WHERE Contact_ID = ?;";
         PreparedStatement ps = JDBC.connection.prepareCall((reportContactAppts));
@@ -48,7 +60,11 @@ public class contactUtil {
         return contactReport;
     }
 
-
+    /**
+     * @param contactId
+     * @return Contact name based on the provided contactId
+     * @throws SQLException
+     */
     public static String getContactName(int contactId) throws SQLException {
         String sql = "SELECT Contact_Name FROM contacts WHERE Contact_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareCall((sql));
@@ -61,6 +77,11 @@ public class contactUtil {
         return contactName;
     }
 
+    /**
+     * @param contactName
+     * @return Contact id based on the provided contactName
+     * @throws SQLException
+     */
     public static int getContactId(String contactName) throws SQLException {
         String sql = "SELECT Contact_ID FROM contacts WHERE Contact_Name = ?";
         PreparedStatement ps = JDBC.connection.prepareCall((sql));

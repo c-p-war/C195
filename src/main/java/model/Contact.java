@@ -1,10 +1,20 @@
 package model;
 
+/**
+ * Contact object model
+ */
 public class Contact {
     private int id;
     private String name;
     private String email;
 
+    /**
+     * Contact constructor
+     *
+     * @param id
+     * @param name
+     * @param email
+     */
     public Contact(int id, String name, String email) {
         this.id = id;
         this.name = name;

@@ -49,6 +49,12 @@ public class customerController implements Initializable {
         return selectedCustomer;
     }
 
+    /**
+     * Returns to the previous screen
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
         Scene scene = new Scene(parent);
@@ -57,6 +63,12 @@ public class customerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Navigates to the update customer form
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void update(ActionEvent actionEvent) throws IOException {
         selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null) {
@@ -70,6 +82,12 @@ public class customerController implements Initializable {
         }
     }
 
+    /**
+     * Navigates to the add customer form
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void add(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("customerAdd.fxml")));
         Scene scene = new Scene(parent);
@@ -78,6 +96,12 @@ public class customerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Sets the table to show all customers on default/load in
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -97,6 +121,11 @@ public class customerController implements Initializable {
 
     }
 
+    /**
+     * Removes the selected customer from the DB
+     *
+     * @throws SQLException
+     */
     public void delete() throws SQLException {
         selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         customerUtil.deleteCustomer(selectedCustomer);

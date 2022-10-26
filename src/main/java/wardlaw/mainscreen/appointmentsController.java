@@ -57,6 +57,11 @@ public class appointmentsController implements Initializable {
         return selectedAppointment;
     }
 
+    /**
+     * Returns the user to the previous screen
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
         Scene scene = new Scene(parent);
@@ -65,6 +70,11 @@ public class appointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Navigates to the update appointment screen
+     * @param actionEvent
+     * @throws IOException
+     */
     public void update(ActionEvent actionEvent) throws IOException {
         selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
         if (selectedAppointment == null) {
@@ -78,6 +88,11 @@ public class appointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Navigates to the add appointments screen
+     * @param actionEvent
+     * @throws IOException
+     */
     public void add(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("appointmentsAdd.fxml")));
         Scene scene = new Scene(parent);
@@ -86,6 +101,9 @@ public class appointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Local helper for setting the table columns in various class methods
+     */
     public void setColumns() {
         colApptId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colApptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -99,6 +117,10 @@ public class appointmentsController implements Initializable {
         colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
     }
 
+    /**
+     * Sets the table to show appointments for the current week
+     * @throws SQLException
+     */
     public void getApptsByWeek() throws SQLException {
         if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnWeek)) {
             appointTable.setItems(appointmentsUtil.getWeek());
@@ -106,6 +128,10 @@ public class appointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Sets the table to show appointments for the current month
+     * @throws SQLException
+     */
     public void getApptsByMonth() throws SQLException {
         if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnMonth)) {
             appointTable.setItems(appointmentsUtil.getMonth());
@@ -113,6 +139,11 @@ public class appointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Sets the table to show all appointments by default/on load in
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -123,6 +154,10 @@ public class appointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Sets the table to show all appointments outside of initalization
+     * @throws SQLException
+     */
     public void getApptsAll() throws SQLException {
         if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnAll)) {
             appointTable.setItems(appointmentsUtil.getAppointments());
@@ -130,6 +165,10 @@ public class appointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Removes the selected appointment from the DB
+     * @throws SQLException
+     */
     public void delete() throws SQLException {
         selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
         appointmentsUtil.deleteAppointment(selectedAppointment);

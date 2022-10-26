@@ -47,6 +47,14 @@ public class loginController implements Initializable {
     public static ResourceBundle rb = ResourceBundle.getBundle("bundle/lang", Locale.getDefault());
     private final ObservableList<User> userList = FXCollections.observableArrayList();
 
+    /**
+     * LAMBDA 1 - Sets alert string for when an appointment is within 15 minutes. Justification: Useful for creating alerts in multiple languages without writing out the alert function.
+     * Checks the DB for matching credentials. Provides alert to user if some or none appointments are scheduled within the next 15 minutes. Navigates to the mainScreen.
+     *
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
         String userName = txtFieldUsername.getText();
         String password = txtFieldPassword.getText();
@@ -70,7 +78,7 @@ public class loginController implements Initializable {
                     noAlerts = false;
                     int id = comingSoon.getId();
                     String start = comingSoon.getStart();
-                    // LAMBDA #1
+                    // LAMBDA 1
                     if (Locale.getDefault().getLanguage().equals("fr")) {
                         alertInterface withinFifteen = () -> "\n\nRendez-vous dans les 15 minutes.\nID: " + id + "\nDate/heure de début: " + start;
                         util.stringToAlert(withinFifteen.alert());
@@ -95,6 +103,11 @@ public class loginController implements Initializable {
         }
     }
 
+    /**
+     * Records login success/failures to txt file
+     *
+     * @param txt
+     */
     private void logActivity(String txt) {
         try (FileWriter fileWriter = new FileWriter("log_act.txt", true)) {
             Date date = new Date(System.currentTimeMillis());
@@ -105,6 +118,12 @@ public class loginController implements Initializable {
         }
     }
 
+    /**
+     * Sets the login forms labels depending on ZoneId
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ZoneId localZoneId = ZoneId.systemDefault();

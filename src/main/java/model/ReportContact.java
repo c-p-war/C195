@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * ReportContact object model. Used in the Schedule by Contacts report
+ */
 public class ReportContact {
     private int id;
     private String title;
@@ -9,6 +12,17 @@ public class ReportContact {
     private String end;
     private int customerId;
 
+    /**
+     * Report Contact constructor, used to generate the Appointments by Contact report
+     *
+     * @param id
+     * @param title
+     * @param type
+     * @param description
+     * @param start
+     * @param end
+     * @param customerId
+     */
     public ReportContact(int id, String title, String type, String description, String start, String end, int customerId) {
         this.id = id;
         this.title = title;

@@ -1,17 +1,18 @@
 package helpers;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Appointment;
 import model.Division;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class divisionUtil {
+    /**
+     * @return All divisions from the DB
+     * @throws SQLException
+     */
     public static ObservableList<Division> getDivisions() throws SQLException {
         String getDivisions = "SELECT * FROM first_level_divisions";
         PreparedStatement ps = JDBC.connection.prepareCall((getDivisions));
@@ -28,6 +29,11 @@ public class divisionUtil {
         return divisionList;
     }
 
+    /**
+     * @param countryId
+     * @return Divisions with the provided countryID
+     * @throws SQLException
+     */
     public static ObservableList<Division> getDivByCountry(int countryId) throws SQLException {
         String getDivByCountry = "SELECT * FROM first_level_divisions WHERE Country_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(getDivByCountry);
@@ -42,29 +48,5 @@ public class divisionUtil {
             divisionList.add(division);
         }
         return divisionList;
-    }
-
-    public static String getDivisionName(int divisionId) throws SQLException {
-        String sql = "SELECT Division FROM first_level_divisions WHERE Division_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareCall((sql));
-        ps.setInt(1, divisionId);
-        ResultSet rs = ps.executeQuery();
-        String divisionName = null;
-        while (rs.next()) {
-            divisionName = rs.getString("Division");
-        }
-        return divisionName;
-    }
-
-    public static int getDivisionId(String divisionName) throws SQLException {
-        String sql = "SELECT Division_ID FROM first_level_divisions WHERE Division = ?";
-        PreparedStatement ps = JDBC.connection.prepareCall((sql));
-        ps.setString(1, divisionName);
-        ResultSet rs = ps.executeQuery();
-        int divisionId = 0;
-        while (rs.next()) {
-            divisionId = rs.getInt("Division_ID");
-        }
-        return divisionId;
     }
 }

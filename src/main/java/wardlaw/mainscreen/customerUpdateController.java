@@ -44,6 +44,12 @@ public class customerUpdateController implements Initializable {
     ObservableList<String> comboListCountries = FXCollections.observableArrayList();
     ObservableList<String> comboListDivisions = FXCollections.observableArrayList();
 
+    /**
+     * Returns to the previous screen
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("customer.fxml")));
         Scene scene = new Scene(parent);
@@ -52,6 +58,12 @@ public class customerUpdateController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Populates the update customer form with the selected customers information. Populates the country combo box and division combo box.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Customer selectedCustomer = customerController.getSelectedCustomer();
@@ -76,6 +88,13 @@ public class customerUpdateController implements Initializable {
         txtFieldCustPhone.setText(String.valueOf(selectedCustomer.getPostal()));
     }
 
+    /**
+     * Saves the updated customer record in the DB
+     *
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void save(ActionEvent actionEvent) throws SQLException, IOException {
         int id = Integer.parseInt(txtFieldCustId.getText());
         String name = txtFieldCustName.getText();
@@ -89,6 +108,11 @@ public class customerUpdateController implements Initializable {
         cancel(actionEvent);
     }
 
+    /**
+     * Sets option values in the division combo box
+     *
+     * @throws SQLException
+     */
     public void setDivisions() throws SQLException {
         comboCustDivision.getItems().clear();
         for (Division division : divisionUtil.getDivByCountry(countryUtil.getCountryId(comboCustCountry.getValue()))) {

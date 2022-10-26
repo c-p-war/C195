@@ -3,6 +3,9 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Customer object model
+ */
 public class Customer {
     private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private int id;
@@ -21,6 +24,18 @@ public class Customer {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    /**
+     * Customer constructor
+     *
+     * @param id
+     * @param name
+     * @param address
+     * @param postal
+     * @param phone
+     * @param division
+     * @param country
+     */
 
     public Customer(int id, String name, String address, String postal, String phone, String division, String country) {
         this.id = id;

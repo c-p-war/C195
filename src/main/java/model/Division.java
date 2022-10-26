@@ -1,10 +1,20 @@
 package model;
 
+/**
+ * Division object model
+ */
 public class Division {
     private int id;
     private String name;
     private int countryId;
 
+    /**
+     * Division constructor
+     *
+     * @param id
+     * @param name
+     * @param countryId
+     */
     public Division(int id, String name, int countryId) {
         this.id = id;
         this.name = name;

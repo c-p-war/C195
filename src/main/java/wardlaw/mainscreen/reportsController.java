@@ -65,6 +65,12 @@ public class reportsController implements Initializable {
 
     ObservableList<String> comboListContacts = FXCollections.observableArrayList();
 
+    /**
+     * Returns to the previous screen
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
         Scene scene = new Scene(parent);
@@ -73,6 +79,12 @@ public class reportsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Populates the three reports table prior to load-in/by default
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -102,6 +114,11 @@ public class reportsController implements Initializable {
         }
     }
 
+    /**
+     * Sets the desired contact on the Scheduled by Contact tables and updates the table
+     *
+     * @throws SQLException
+     */
     public void selectContact() throws SQLException {
         int contactId = contactUtil.getContactId(comboContact.getValue());
         tableSched.setItems(contactUtil.reportContacts(contactId));

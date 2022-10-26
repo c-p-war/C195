@@ -36,6 +36,12 @@ public class customerAddController implements Initializable {
     ObservableList<String> comboListCountries = FXCollections.observableArrayList();
     ObservableList<String> comboListDivisions = FXCollections.observableArrayList();
 
+    /**
+     * Returns to the previous screen
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("customer.fxml")));
         Scene scene = new Scene(parent);
@@ -44,6 +50,13 @@ public class customerAddController implements Initializable {
         stage.show();
     }
 
+    /**
+     * LAMBDA 2 - Increments the customer ID. Justification: Reusability for the Appointments ID incrementation
+     * Populates the id field, country combo box, and division combo box.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -63,6 +76,11 @@ public class customerAddController implements Initializable {
         }
     }
 
+    /**
+     * Sets the value options for the division combo box
+     *
+     * @throws SQLException
+     */
     public void setDivisions() throws SQLException {
         comboCustDivision.getItems().clear();
         for (Division division : divisionUtil.getDivByCountry(countryUtil.getCountryId(comboCustCountry.getValue()))) {
@@ -70,6 +88,12 @@ public class customerAddController implements Initializable {
         }
     }
 
+    /**
+     * Sends the new customer to the DB
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void submit(ActionEvent actionEvent) throws IOException {
         int id = Integer.parseInt(txtFieldCustId.getText());
         String name = txtFieldCustName.getText();
