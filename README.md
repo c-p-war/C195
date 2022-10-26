@@ -26,6 +26,8 @@ IntelliJ IDEA 2022.2.3 (Ultimate Edition)
 ## HOW TO RUN
 **Pre-Condition(s)**
 1. Intellij (or equivalent) IDE is installed and configured to run Java based projects
+2. Local machine is configured to host a MySQL DB and you have the appropriate access. The connection credentials can be changed in the JDBC.java file
+3. The local database has been seeded/populated with applicable mock data, or applicable mock data is already available. If needed the mock.sql file has suggested statements
 
 After starting the application you will be directed to a login page. Enter credentials and you will navigate to the main screen with three options: 
 
