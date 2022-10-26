@@ -47,7 +47,6 @@ public class loginController implements Initializable {
     public static ResourceBundle rb = ResourceBundle.getBundle("bundle/lang", Locale.getDefault());
     private final ObservableList<User> userList = FXCollections.observableArrayList();
 
-
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
         String userName = txtFieldUsername.getText();
         String password = txtFieldPassword.getText();
@@ -97,7 +96,7 @@ public class loginController implements Initializable {
     }
 
     private void logActivity(String txt) {
-        try (FileWriter fileWriter = new FileWriter("login_activity.txt", true)) {
+        try (FileWriter fileWriter = new FileWriter("log_act.txt", true)) {
             Date date = new Date(System.currentTimeMillis());
             SimpleDateFormat tFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
             fileWriter.write(txt + tFormat.format(date) + "\n\n");
@@ -108,6 +107,8 @@ public class loginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ZoneId localZoneId = ZoneId.systemDefault();
+        labelZoneId.setText("Local Zone ID: " + localZoneId);
         if (Locale.getDefault().getLanguage().equals("fr")) {
             labelUserName.setText(rb.getString("userName"));
             labelPassword.setText(rb.getString("password"));

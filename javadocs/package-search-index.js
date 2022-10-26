@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"wardlaw.c195","l":"wardlaw.c195"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"wardlaw.c195","l":"helpers"},{"m":"wardlaw.c195","l":"model"},{"m":"wardlaw.c195","l":"wardlaw.mainscreen"}];updateSearchResults();
