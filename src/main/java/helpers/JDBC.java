@@ -16,12 +16,9 @@ public abstract class JDBC {
     private static final String password = "digital91";
     public static Connection connection;
 
-    // Methods to establish DB Connection
     public static void openConnection(){
         try {
-            // Locate the driver
             Class.forName(driver);
-            // Assign the connection, returns a connection object
             connection = DriverManager.getConnection(jdbcURL, userName, password);
             System.out.println("Connection Successful!");
         } catch (Exception e){

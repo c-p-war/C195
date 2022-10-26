@@ -1,6 +1,5 @@
 package wardlaw.mainscreen;
 
-import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +16,6 @@ import model.Appointment;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -88,77 +86,7 @@ public class appointmentsController implements Initializable {
         stage.show();
     }
 
-    public void getApptsByWeek() throws SQLException {
-        if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnWeek)) {
-            appointTable.setItems(appointmentsUtil.getWeek());
-            colApptId.setCellValueFactory(new PropertyValueFactory<>("id"));
-            colApptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-            colApptDescr.setCellValueFactory(new PropertyValueFactory<>("description"));
-            colApptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-            colApptContact.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-            coldApptType.setCellValueFactory(new PropertyValueFactory<>("type"));
-            colApptStart.setCellValueFactory(new PropertyValueFactory<>("start"));
-            colApptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
-            colApptCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        }
-    }
-
-    public void getApptsByMonth() throws SQLException {
-        if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnMonth)) {
-            appointTable.setItems(appointmentsUtil.getMonth());
-            colApptId.setCellValueFactory(new PropertyValueFactory<>("id"));
-            colApptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-            colApptDescr.setCellValueFactory(new PropertyValueFactory<>("description"));
-            colApptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-            colApptContact.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-            coldApptType.setCellValueFactory(new PropertyValueFactory<>("type"));
-            colApptStart.setCellValueFactory(new PropertyValueFactory<>("start"));
-            colApptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
-            colApptCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            appointTable.setItems(appointmentsUtil.getAppointments());
-            colApptId.setCellValueFactory(new PropertyValueFactory<>("id"));
-            colApptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-            colApptDescr.setCellValueFactory(new PropertyValueFactory<>("description"));
-            colApptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-            colApptContact.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-            coldApptType.setCellValueFactory(new PropertyValueFactory<>("type"));
-            colApptStart.setCellValueFactory(new PropertyValueFactory<>("start"));
-            colApptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
-            colApptCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void getApptsAll() throws SQLException {
-        if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnAll)) {
-            appointTable.setItems(appointmentsUtil.getAppointments());
-            colApptId.setCellValueFactory(new PropertyValueFactory<>("id"));
-            colApptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-            colApptDescr.setCellValueFactory(new PropertyValueFactory<>("description"));
-            colApptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-            colApptContact.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-            coldApptType.setCellValueFactory(new PropertyValueFactory<>("type"));
-            colApptStart.setCellValueFactory(new PropertyValueFactory<>("start"));
-            colApptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
-            colApptCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        }
-    }
-
-    public void delete() throws SQLException {
-        selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
-        appointmentsUtil.deleteAppointment(selectedAppointment);
-        appointTable.setItems(appointmentsUtil.getAppointments());
+    public void setColumns() {
         colApptId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colApptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colApptDescr.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -169,6 +97,44 @@ public class appointmentsController implements Initializable {
         colApptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         colApptCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colApptUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+    }
+
+    public void getApptsByWeek() throws SQLException {
+        if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnWeek)) {
+            appointTable.setItems(appointmentsUtil.getWeek());
+            setColumns();
+        }
+    }
+
+    public void getApptsByMonth() throws SQLException {
+        if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnMonth)) {
+            appointTable.setItems(appointmentsUtil.getMonth());
+            setColumns();
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            appointTable.setItems(appointmentsUtil.getAppointments());
+            setColumns();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void getApptsAll() throws SQLException {
+        if (this.toggleGroupAppt.getSelectedToggle().equals(this.radioBtnAll)) {
+            appointTable.setItems(appointmentsUtil.getAppointments());
+            setColumns();
+        }
+    }
+
+    public void delete() throws SQLException {
+        selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
+        appointmentsUtil.deleteAppointment(selectedAppointment);
+        appointTable.setItems(appointmentsUtil.getAppointments());
+        setColumns();
         util.stringToAlert("The following appointment was deleted:\nAppointment ID: " + selectedAppointment.getId() + "\nType: " + selectedAppointment.getType());
     }
 }

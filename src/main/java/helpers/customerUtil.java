@@ -103,32 +103,6 @@ public class customerUtil {
         System.out.println(appointmentsList);
         return appointmentsList;
     }
-// TODO: Correct division id
-    // TODO: Add country
-
-//    public static ObservableList<Customer> getCustomersByDivision(int in_divisionId) throws SQLException {
-//        String sql = "SELECT * FROM customers WHERE Division_ID = ?";
-//        PreparedStatement ps = JDBC.connection.prepareCall(sql);
-//        ps.setInt(1, in_divisionId);
-//        ResultSet rs = ps.executeQuery();
-//        ObservableList<Customer> customerList = FXCollections.observableArrayList();
-//
-//        while (rs.next()) {
-//            int id = rs.getInt("Customer_ID");
-//            String name = rs.getString("Customer_Name");
-//            String address = rs.getString("Address");
-//            String postal = rs.getString("Postal_Code");
-//            String phone = rs.getString("Phone");
-//            int divisionId = rs.getInt("Division_ID");
-//            Customer customer = new Customer(id, name, address, postal, phone, divisionId);
-//            customerList.add(customer);
-//        }
-//        System.out.println(customerList);
-//        return customerList;
-//    }
-
-// TODO: Correct division id
-    // TODO: Add country
 
     public static void addCustomer(Customer customer) {
         try {
@@ -146,7 +120,7 @@ public class customerUtil {
         }
     }
 
-    public static void updateCustomer(Customer customer) throws SQLException {
+    public static void updateCustomer(Customer customer) {
         try {
             String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareCall(sql);
@@ -162,7 +136,7 @@ public class customerUtil {
         }
     }
 
-    public static void deleteCustomer(Customer customer) throws SQLException {
+    public static void deleteCustomer(Customer customer) {
         try {
             String deleteAppointments = "DELETE FROM appointments WHERE Customer_ID = ?";
             PreparedStatement delete_apt_ps = JDBC.connection.prepareCall(deleteAppointments

@@ -1,22 +1,23 @@
 package model;
 
 public class ReportMonth {
-    private int monthInt;
+    private String type;
     private int count;
-    private String monthString;
+    private String month;
 
-    public ReportMonth(int monthInt, String monthString, int count) {
-        this.monthInt = monthInt;
-        this.monthString = monthString;
+
+    public ReportMonth(String type, String month, int count) {
+        this.type = type;
+        this.month = month;
         this.count = count;
     }
 
-    public int getMonthInt() {
-        return monthInt;
+    public String getType() {
+        return type;
     }
 
-    public void setMonthInt(int monthInt) {
-        this.monthInt = monthInt;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getCount() {
@@ -27,11 +28,11 @@ public class ReportMonth {
         this.count = count;
     }
 
-    public String getMonthString() {
-        return monthString;
+    public String getMonth() {
+        return month;
     }
 
-    public void setMonthString(String monthString) {
-        this.monthString = monthString;
+    public void setmonth(String month) {
+        this.month = month;
     }
 }

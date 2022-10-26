@@ -62,7 +62,6 @@ public class customerUpdateController implements Initializable {
                 comboListCountries.add(country.getCountry());
             }
             comboCustCountry.setItems(comboListCountries);
-            // TODO: Reduce cognitive complexity
             comboCustCountry.setValue(customerUtil.getCountryName(customerUtil.getDivisionId(selectedCustomer.getDivision())));
             for (Division division : divisionUtil.getDivByCountry(customerUtil.getCountryId(customerUtil.getDivisionId(selectedCustomer.getDivision())))) {
                 comboListDivisions.add(division.getName());

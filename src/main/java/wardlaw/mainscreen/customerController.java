@@ -98,7 +98,6 @@ public class customerController implements Initializable {
     }
 
     public void delete() throws SQLException {
-        // TODO: Alert/error handling
         selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         customerUtil.deleteCustomer(selectedCustomer);
         customerList = customerUtil.getCustomers();

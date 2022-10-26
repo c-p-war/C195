@@ -149,58 +149,17 @@ public class appointmentsUtil {
 
 
     public static ObservableList<ReportMonth> reportMonths() throws SQLException {
-        String sql = "SELECT MONTH(Start) AS ?,COUNT(*) AS ? FROM appointments GROUP BY MONTH(Start)";
+        String sql = "SELECT MONTHNAME(Start) as month, type, count(*) AS count FROM appointments GROUP BY Type, MONTHNAME(Start)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, "month");
-        ps.setString(2, "count");
         ResultSet rs = ps.executeQuery();
         ObservableList<ReportMonth> reportList = FXCollections.observableArrayList();
         while (rs.next()) {
-            int monthInt = rs.getInt("month");
+            String type = rs.getString("type");
+            String month = rs.getString("month");
             int count = rs.getInt("count");
-            String monthString = null;
-            switch (monthInt) {
-                case 1:
-                    monthString = "January";
-                    break;
-                case 2:
-                    monthString = "February";
-                    break;
-                case 3:
-                    monthString = "March";
-                    break;
-                case 4:
-                    monthString = "April";
-                    break;
-                case 5:
-                    monthString = "May";
-                    break;
-                case 6:
-                    monthString = "June";
-                    break;
-                case 7:
-                    monthString = "July";
-                    break;
-                case 8:
-                    monthString = "August";
-                    break;
-                case 9:
-                    monthString = "September";
-                    break;
-                case 10:
-                    monthString = "October";
-                    break;
-                case 11:
-                    monthString = "November";
-                    break;
-                case 12:
-                    monthString = "December";
-                    break;
-            }
-            ReportMonth report = new ReportMonth(monthInt, monthString, count);
+            ReportMonth report = new ReportMonth(type, month, count);
             reportList.add(report);
         }
-        System.out.println(reportList.get(0).getMonthString());
         return reportList;
     }
 

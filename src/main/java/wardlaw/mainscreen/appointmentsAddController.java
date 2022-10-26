@@ -64,8 +64,6 @@ public class appointmentsAddController implements Initializable {
             // LAMBDA #2
             incrementInterface intStart = n -> n + 1;
             int apptCount = appointmentsUtil.getAppointments().size();
-            System.out.println("apptCount: " + apptCount);
-            System.out.println("incremented: " + intStart.increment(apptCount));
             txtFieldId.setText(String.valueOf(intStart.increment(apptCount)));
             for (Contact contact : contactUtil.getContacts()) {
                 comboListContacts.add(contact.getName());
@@ -102,7 +100,6 @@ public class appointmentsAddController implements Initializable {
             }
         }
         if (zdt_start < 8 || zdt_start >= 22 || zdt_end < 8 || zdt_end >= 22) {
-            System.out.println("Incorrect time");
             util.stringToError("Time must be between 8:00AM EST and 10:00PM EST");
         } else {
             Appointment newAppointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contact);

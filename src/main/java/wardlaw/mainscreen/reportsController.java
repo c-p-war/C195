@@ -3,7 +3,6 @@ package wardlaw.mainscreen;
 import helpers.appointmentsUtil;
 import helpers.contactUtil;
 import helpers.countryUtil;
-import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,13 +53,16 @@ public class reportsController implements Initializable {
     @FXML
     public TableColumn<ReportMonth, String> colMonth;
     @FXML
-    public TableColumn<ReportMonth, String> colMonthCount;
-    public TableView<ReportType> tableType;
-    public TableColumn<ReportType, String> colType;
-    public TableColumn<ReportType, Integer> colTypeCount;
+    public TableColumn<ReportMonth, Integer> colMonthCount;
+    @FXML
+    public TableColumn<ReportMonth, String> colMonthType;
+    @FXML
     public TableView<ReportCountry> tableCountry;
+    @FXML
     public TableColumn<ReportCountry, String> colCountry;
+    @FXML
     public TableColumn<ReportCountry, Integer> colCountryCount;
+
     ObservableList<String> comboListContacts = FXCollections.observableArrayList();
 
     public void cancel(ActionEvent actionEvent) throws IOException {
@@ -86,13 +88,9 @@ public class reportsController implements Initializable {
             ObservableList<ReportMonth> byMonthList = appointmentsUtil.reportMonths();
             // Appointments By Month
             tableMonth.setItems(byMonthList);
-            colMonth.setCellValueFactory(new PropertyValueFactory<>("monthString"));
+            colMonth.setCellValueFactory(new PropertyValueFactory<>("month"));
+            colMonthType.setCellValueFactory(new PropertyValueFactory<>("type"));
             colMonthCount.setCellValueFactory(new PropertyValueFactory<>("count"));
-            // Appointments By Type
-            ObservableList<ReportType> distinctTypes = appointmentsUtil.getDistinctTypes();
-            tableType.setItems(distinctTypes);
-            colType.setCellValueFactory(new PropertyValueFactory<>("type"));
-            colTypeCount.setCellValueFactory(new PropertyValueFactory<>("count"));
             // Customers By Country
             ObservableList<ReportCountry> custByCountry = countryUtil.getCustByCountry();
             tableCountry.setItems(custByCountry);

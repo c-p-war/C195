@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Appointment;
-import model.Customer;
 import model.User;
 
 import java.io.FileWriter;
@@ -26,7 +25,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -59,31 +57,31 @@ public class loginController implements Initializable {
 
         if (userList.size() > 0) {
             int userId = userList.get(0).getId();
-            writeActivity("Successful Login - User: Test | Time: ");
+            logActivity("Successful Login - User: Test | Time: ");
             // Returns all appointments tied to a user id
             ObservableList<Appointment> userAppointments = appointmentsUtil.getAppointmentsByUser(userId);
             Appointment comingSoon = null;
             boolean noAlerts = true;
-            for (Appointment a : userAppointments){
+            for (Appointment a : userAppointments) {
                 LocalDateTime now = LocalDateTime.now();
                 LocalDateTime rangeTop = now.plusMinutes(15);
                 LocalDateTime ldtStart = util.getLdtFromString(a.getStart());
-                if (ldtStart.isAfter(now) && ldtStart.isBefore(rangeTop)){
+                if (ldtStart.isAfter(now) && ldtStart.isBefore(rangeTop)) {
                     comingSoon = a;
                     noAlerts = false;
                     int id = comingSoon.getId();
                     String start = comingSoon.getStart();
                     // LAMBDA #1
-                    if (Locale.getDefault().getLanguage().equals("fr")){
+                    if (Locale.getDefault().getLanguage().equals("fr")) {
                         alertInterface withinFifteen = () -> "\n\nRendez-vous dans les 15 minutes.\nID: " + id + "\nDate/heure de début: " + start;
                         util.stringToAlert(withinFifteen.alert());
-                    }else {
+                    } else {
                         alertInterface withinFifteen = () -> "\n\nAppointment within 15 minutes.\nID: " + id + "\nStart Date/Time: " + start;
                         util.stringToAlert(withinFifteen.alert());
                     }
                 }
             }
-            if (noAlerts){
+            if (noAlerts) {
                 util.stringToAlert("No upcoming appointments");
             }
             // Navigate to main
@@ -93,18 +91,16 @@ public class loginController implements Initializable {
             stage.setScene(scene);
             stage.show();
         } else {
-            // TODO: Pass in locale information to the util method
             util.stringToError("Unsuccessful login.\n\n Try again");
-            writeActivity("Unsuccessful Login - User: Test | Time: ");
+            logActivity("Unsuccessful Login - User: Test | Time: ");
         }
     }
 
-    // TODO: Refactor
-    private void writeActivity(String loginText) {
+    private void logActivity(String txt) {
         try (FileWriter fileWriter = new FileWriter("login_activity.txt", true)) {
             Date date = new Date(System.currentTimeMillis());
-            SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
-            fileWriter.write(loginText + timeFormat.format(date) + "\n");
+            SimpleDateFormat tFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+            fileWriter.write(txt + tFormat.format(date) + "\n\n");
         } catch (IOException exception) {
             exception.printStackTrace();
         }

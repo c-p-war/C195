@@ -100,7 +100,6 @@ public class appointmentsUpdateController implements Initializable {
         if (!overlap && !outOfOffice){
             // Convert to UTC for DB storage
             String utc_start = util.localToUTC(start);
-            System.out.println("Update Start: " + utc_start);
             String utc_end = util.localToUTC(end);
             Appointment newAppointment = new Appointment(id, title, description, location, type, utc_start, utc_end, customerId, userId, contact);
             appointmentsUtil.updateAppointment(newAppointment);

@@ -18,7 +18,7 @@ public class mainScreenController {
     public Button btnAppt;
     public Button btnReports;
 
-    public void exit(ActionEvent actionEvent) throws IOException {
+    public void exit(ActionEvent actionEvent) {
         JDBC.closeConnection();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
