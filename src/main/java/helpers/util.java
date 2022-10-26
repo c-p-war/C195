@@ -11,11 +11,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class util {
     private static ZoneId sysZoneId = ZoneId.systemDefault();
     private static ZoneId utcZoneId = ZoneId.of("UTC");
     private static DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    private static ResourceBundle rb = ResourceBundle.getBundle("bundle/lang", Locale.getDefault());
 
     public static ObservableList<User> checkUsers(String userName, String in_password) throws SQLException {
         String sql = "SELECT * FROM users WHERE User_Name = ? AND Password =?";
@@ -38,17 +42,29 @@ public class util {
 
     public static Alert stringToError(String string) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText(string);
-        alert.showAndWait();
+        if (Locale.getDefault().getLanguage().equals("fr")){
+            alert.setTitle(rb.getString("error"));
+            alert.setContentText(rb.getString("errorMismatch"));
+            alert.showAndWait();
+        } else {
+            alert.setTitle("Error");
+            alert.setContentText(string);
+            alert.showAndWait();
+        }
         return alert;
     }
 
     public static Alert stringToAlert(String string) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Alert");
-        alert.setContentText(string);
-        alert.showAndWait();
+        if (Locale.getDefault().getLanguage().equals("fr")){
+            alert.setTitle(rb.getString("alert"));
+            alert.setContentText(string);
+            alert.showAndWait();
+        }else {
+            alert.setTitle("Alert");
+            alert.setContentText(string);
+            alert.showAndWait();
+        }
         return alert;
     }
 

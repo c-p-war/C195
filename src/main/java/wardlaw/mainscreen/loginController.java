@@ -3,6 +3,7 @@ package wardlaw.mainscreen;
 import helpers.appointmentsUtil;
 import helpers.util;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Customer;
+import model.User;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -37,58 +41,65 @@ public class loginController implements Initializable {
     public TextField txtFieldPassword;
     @FXML
     public Label labelZoneId;
+    @FXML
+    public Label labelUserName;
+    @FXML
+    public Label labelPassword;
 
-    private DateTimeFormatter datetimeDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    public static ResourceBundle rb = ResourceBundle.getBundle("bundle/lang", Locale.getDefault());
+    private final ObservableList<User> userList = FXCollections.observableArrayList();
 
 
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
         String userName = txtFieldUsername.getText();
         String password = txtFieldPassword.getText();
+        for (User user : util.checkUsers(userName, password)) {
+            userList.add(user);
+        }
 
-//        LocalDate myLD = LocalDate.of(2020, 10, 11);
-//        LocalTime myLT = LocalTime.of(22, 0);
-//
-//        LocalDateTime myLDT = LocalDateTime.of(myLD, myLT);
-//        // 1. String to LDT, get it working
-//        System.out.println(myLDT);
-//        ZoneId myZoneID = ZoneId.systemDefault();
-//        ZonedDateTime myZDT = ZonedDateTime.of(myLDT, myZoneID);
-////        System.out.println("User time: " + myZDT);
-//        ZoneId utcZoneId = ZoneId.of("UTC");
-//        // Local Time -> UTC
-//        ZonedDateTime utcZDT = ZonedDateTime.ofInstant(myZDT.toInstant(), utcZoneId);
-//        System.out.println("Local Time to UTC: " + utcZDT.toLocalDate().toString() + " " + utcZDT.toLocalTime().toString());
-//        // UTC -> Local Time
-//        myZDT = ZonedDateTime.ofInstant(utcZDT.toInstant(), myZoneID);
-//        System.out.println("UTC to User Time: " + myZDT.toLocalDate().toString() + " " + myZDT.toLocalTime().toString());
-
-
-
-//        if (util.checkUsers(userName, password).size() > 0) {
-//            writeActivity("Successful Login - User: Test | Time: ");
-//            ObservableList<Appointment> comingSoon = appointmentsUtil.getFifteen();
-//            if (comingSoon.size() > 0) {
-//                Appointment alert = comingSoon.get(0);
-//                int id = alert.getId();
-//                // TODO: Verify time conversion
-//                LocalDateTime start = alert.getStart();
-//                String txt = "\n\nAppointment within 15 minutes.\nID: " + id + "\nStart Date/Time: " + start;
-        // LAMBDA #1
-//        alertInterface withinFifteen = () -> "\n\nAppointment within 15 minutes.\nID: " + id + "\nStart Date/Time: " + start;
-//        util.stringToAlert(withinFifteen.alert());
-//            }
-        // Navigate to main
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-//        } else {
-//            util.stringToError("Unsuccessful login.\n\n Try again");
-//            writeActivity("Unsuccessful Login - User: Test | Time: ");
-//        }
+        if (userList.size() > 0) {
+            int userId = userList.get(0).getId();
+            writeActivity("Successful Login - User: Test | Time: ");
+            // Returns all appointments tied to a user id
+            ObservableList<Appointment> userAppointments = appointmentsUtil.getAppointmentsByUser(userId);
+            Appointment comingSoon = null;
+            boolean noAlerts = true;
+            for (Appointment a : userAppointments){
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime rangeTop = now.plusMinutes(15);
+                LocalDateTime ldtStart = util.getLdtFromString(a.getStart());
+                if (ldtStart.isAfter(now) && ldtStart.isBefore(rangeTop)){
+                    comingSoon = a;
+                    noAlerts = false;
+                    int id = comingSoon.getId();
+                    String start = comingSoon.getStart();
+                    // LAMBDA #1
+                    if (Locale.getDefault().getLanguage().equals("fr")){
+                        alertInterface withinFifteen = () -> "\n\nRendez-vous dans les 15 minutes.\nID: " + id + "\nDate/heure de début: " + start;
+                        util.stringToAlert(withinFifteen.alert());
+                    }else {
+                        alertInterface withinFifteen = () -> "\n\nAppointment within 15 minutes.\nID: " + id + "\nStart Date/Time: " + start;
+                        util.stringToAlert(withinFifteen.alert());
+                    }
+                }
+            }
+            if (noAlerts){
+                util.stringToAlert("No upcoming appointments");
+            }
+            // Navigate to main
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainScreen.fxml")));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            // TODO: Pass in locale information to the util method
+            util.stringToError("Unsuccessful login.\n\n Try again");
+            writeActivity("Unsuccessful Login - User: Test | Time: ");
+        }
     }
 
+    // TODO: Refactor
     private void writeActivity(String loginText) {
         try (FileWriter fileWriter = new FileWriter("login_activity.txt", true)) {
             Date date = new Date(System.currentTimeMillis());
@@ -101,6 +112,10 @@ public class loginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        labelZoneId.setText("Local Zone ID: " + localZoneId);
+        if (Locale.getDefault().getLanguage().equals("fr")) {
+            labelUserName.setText(rb.getString("userName"));
+            labelPassword.setText(rb.getString("password"));
+            btnLogin.setText(rb.getString("login"));
+        }
     }
 }

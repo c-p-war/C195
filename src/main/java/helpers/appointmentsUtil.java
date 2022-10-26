@@ -62,6 +62,30 @@ public class appointmentsUtil {
         return fifteenList;
     }
 
+    public static ObservableList<Appointment> getAppointmentsByUser(int in_userId) throws SQLException {
+        String getFifteen = "SELECT * FROM appointments where User_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall((getFifteen));
+        ps.setInt(1, in_userId);
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Appointment> appointmentsList = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            String start = util.utcToLocal(rs.getTimestamp("Start").toLocalDateTime());
+            String end = util.utcToLocal(rs.getTimestamp("End").toLocalDateTime());
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            String contactName = contactUtil.getContactName(rs.getInt("Contact_ID"));
+            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactName);
+            appointmentsList.add(appointment);
+        }
+        return appointmentsList;
+    }
+
     public static ObservableList<Appointment> getWeek() throws SQLException {
         String getWeek = "SELECT * FROM appointments where WEEK(START) = WEEK(CURRENT_TIMESTAMP)";
         PreparedStatement ps = JDBC.connection.prepareCall((getWeek));

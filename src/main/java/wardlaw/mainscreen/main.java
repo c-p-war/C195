@@ -15,6 +15,7 @@ import java.util.Date;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class main extends Application {
 
@@ -28,6 +29,7 @@ public class main extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
+        Locale.setDefault(new Locale("fr"));
         JDBC.openConnection();
         launch();
         JDBC.closeConnection();
