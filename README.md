@@ -9,7 +9,14 @@ Caleb Wardlaw
 cwardl4@wgu.edu
 
 ## APP. VERSION
-1.0
+1.0 (Attempt 1)
+
+1.1 (Attempt 2)
+
+***Changes*** - 
+1. Updated login btn to say "login" when viewed in English
+2. Set a user existence check when updating/adding appointments
+3. Set a customer existence check when updating/adding appointments
 
 ## DATE
 10/26/2022
