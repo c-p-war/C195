@@ -5,7 +5,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wardlaw.mainscreen.loginController">
     <children>
-        <Button fx:id="btnLogin" layoutX="206.0" layoutY="226.0" mnemonicParsing="false" onAction="#login" text="Button" />
+        <Button fx:id="btnLogin" layoutX="206.0" layoutY="226.0" mnemonicParsing="false" onAction="#login" text="Login" />
         <TextField fx:id="txtFieldUsername" layoutX="206.0" layoutY="128.0" />
         <TextField fx:id="txtFieldPassword" layoutX="206.0" layoutY="181.0" />
         <Label fx:id="labelUserName" layoutX="206.0" layoutY="111.0" text="Username" />

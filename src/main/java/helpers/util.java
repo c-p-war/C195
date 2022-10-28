@@ -15,7 +15,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * Holds utility methods for date/times, errors, and alerts
+ * Holds utility methods for users, date/times, errors, and alerts
  */
 public class util {
     private static ZoneId sysZoneId = ZoneId.systemDefault();
@@ -47,6 +47,32 @@ public class util {
             userList.add(user);
         }
         return userList;
+    }
+
+    /**
+     * Checks db for existing user by userId.
+     * @param in_userId
+     * @return True if found, false if not.
+     * @throws SQLException
+     */
+    public static boolean checkUserExists(int in_userId) throws SQLException {
+        String sql = "SELECT * FROM users WHERE User_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, in_userId);
+        ResultSet rs = ps.executeQuery();
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        while (rs.next()) {
+            int id = rs.getInt("User_ID");
+            String name = rs.getString("User_Name");
+            String password = rs.getString("Password");
+            User user = new User(id, name, password);
+            userList.add(user);
+        }
+        if (userList.size() == 1){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

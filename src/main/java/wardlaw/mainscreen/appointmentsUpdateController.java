@@ -86,6 +86,8 @@ public class appointmentsUpdateController implements Initializable {
         ObservableList<Appointment> appointments = customerUtil.getCustomerAppointments(customerId);
         boolean overlap = false;
         boolean outOfOffice = false;
+        boolean customerExists = customerUtil.checkCustomerExists(customerId);
+        boolean userExists = util.checkUserExists(userId);
         // Set overlap
         for (Appointment a : appointments) {
             if (a.getId() != id) {
@@ -108,8 +110,16 @@ public class appointmentsUpdateController implements Initializable {
         if (outOfOffice) {
             util.stringToError("Times must be between 8AM EST and 10PM EST");
         }
+        // Check customer exists
+        if (!customerExists){
+            util.stringToError("Customer does not exist");
+        }
+        // Check user exists
+        if (!userExists){
+            util.stringToError("User does not exist");
+        }
         // Update appointment if conditions are met
-        if (!overlap && !outOfOffice) {
+        if (!overlap && !outOfOffice && customerExists && userExists) {
             // Convert to UTC for DB storage
             String utc_start = util.localToUTC(start);
             String utc_end = util.localToUTC(end);

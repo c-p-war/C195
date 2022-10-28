@@ -108,16 +108,40 @@ public class appointmentsAddController implements Initializable {
         int zdt_start = util.localToEST(ldt_start).getHour();
         int zdt_end = util.localToEST(ldt_end).getHour();
         ObservableList<Appointment> appointments = customerUtil.getCustomerAppointments(customerId);
+        boolean overlap = false;
+        boolean outOfOffice = false;
+        boolean customerExists = customerUtil.checkCustomerExists(customerId);
+        boolean userExists = util.checkUserExists(userId);
         for (Appointment a : appointments) {
             LocalDateTime a_start = util.getLdtFromString(a.getStart());
             LocalDateTime a_end = util.getLdtFromString(a.getEnd());
             if (a_start.isBefore(ldt_end) && (ldt_start.isBefore(a_end))) {
+                overlap = true;
                 util.stringToAlert("Block already booked");
             }
         }
+        // Set outOfOffice
         if (zdt_start < 8 || zdt_start >= 22 || zdt_end < 8 || zdt_end >= 22) {
-            util.stringToError("Time must be between 8:00AM EST and 10:00PM EST");
-        } else {
+            outOfOffice = true;
+        }
+        // Check overlap
+        if (overlap) {
+            util.stringToError("Appointment overlap");
+        }
+        // Check out of office
+        if (outOfOffice) {
+            util.stringToError("Times must be between 8AM EST and 10PM EST");
+        }
+        // Check customer exists
+        if (!customerExists){
+            util.stringToError("Customer does not exist");
+        }
+        // Check user exists
+        if (!userExists){
+            util.stringToError("User does not exist");
+        }
+        // Update appointment if conditions are met
+        if (!overlap && !outOfOffice && customerExists && userExists) {
             Appointment newAppointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contact);
             appointmentsUtil.addAppointment(newAppointment);
             cancel(actionEvent);

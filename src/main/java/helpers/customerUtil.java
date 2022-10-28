@@ -106,6 +106,36 @@ public class customerUtil {
     }
 
     /**
+     * Checks DB for customer by customerId
+     * @param in_customerId
+     * @return Returns true if found, false if not.
+     * @throws SQLException
+     */
+    public static boolean checkCustomerExists(int in_customerId) throws SQLException {
+        String getCustomer = " SELECT * FROM customers WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareCall(getCustomer);
+        ps.setInt(1, in_customerId);
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
+        while (rs.next()) {
+            int id = rs.getInt("Customer_ID");
+            String name = rs.getString("Customer_Name");
+            String address = rs.getString("Address");
+            String postal = rs.getString("Postal_Code");
+            String phone = rs.getString("Phone");
+            String division = customerUtil.getDivisionName(rs.getInt("Division_ID"));
+            String country = customerUtil.getCountryName(rs.getInt("Division_ID"));
+            Customer customer = new Customer(id, name, address, postal, phone, division, country);
+            customerList.add(customer);
+        }
+        if (customerList.size() == 1){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * @param in_customerId
      * @return Appointments from the database that have the provided customerId
      * @throws SQLException
