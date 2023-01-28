@@ -19,16 +19,18 @@
                 <TableColumn fx:id="colApptUserId" prefWidth="75.0" text="User ID" />
             </columns>
         </TableView>
+        <TextField fx:id="textSearch" layoutX="567.0" layoutY="18.0" prefHeight="26.0" prefWidth="165.0" promptText="Contact" />
         <Label fx:id="labelAppoint" layoutX="14.0" layoutY="14.0" text="Appointments" />
         <Button fx:id="btnCancel" layoutX="17.0" layoutY="436.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
         <Button fx:id="btnUpdate" layoutX="732.0" layoutY="437.0" mnemonicParsing="false" onAction="#update" text="Update" />
         <Button fx:id="btnAdd" layoutX="655.0" layoutY="437.0" mnemonicParsing="false" onAction="#add" text="Add" />
-        <RadioButton fx:id="radioBtnWeek" layoutX="733.0" layoutY="14.0" mnemonicParsing="false" onAction="#getApptsByWeek" text="Week">
+        <RadioButton fx:id="radioBtnWeek" layoutX="324.0" layoutY="22.0" mnemonicParsing="false" onAction="#getApptsByWeek" text="Week">
          <toggleGroup>
             <ToggleGroup fx:id="toggleGroupAppt" />
          </toggleGroup></RadioButton>
-        <RadioButton fx:id="radioBtnMonth" layoutX="655.0" layoutY="14.0" mnemonicParsing="false" onAction="#getApptsByMonth" text="Month" toggleGroup="$toggleGroupAppt" />
-      <RadioButton fx:id="radioBtnAll" layoutX="592.0" layoutY="14.0" mnemonicParsing="false" onAction="#getApptsAll" selected="true" text="All" toggleGroup="$toggleGroupAppt" />
+        <RadioButton fx:id="radioBtnMonth" layoutX="231.0" layoutY="22.0" mnemonicParsing="false" onAction="#getApptsByMonth" text="Month" toggleGroup="$toggleGroupAppt" />
+      <RadioButton fx:id="radioBtnAll" layoutX="152.0" layoutY="22.0" mnemonicParsing="false" onAction="#getApptsAll" selected="true" text="All" toggleGroup="$toggleGroupAppt" />
       <Button fx:id="btnDelete" layoutX="556.0" layoutY="437.0" mnemonicParsing="false" onAction="#delete" text="Delete" />
+      <Button fx:id="btnSearch" layoutX="733.0" layoutY="18.0" mnemonicParsing="false" text="Search" onAction="#searchAppointments"/>
     </children>
 </AnchorPane>

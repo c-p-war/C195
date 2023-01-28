@@ -40,6 +40,33 @@ public class appointmentsUtil {
     }
 
     /**
+     * @return Search appointments by title
+     * @throws SQLException
+     */
+    public static ObservableList<Appointment> searchAppointments(String search) throws SQLException {
+        String getAppointments = "SELECT * FROM appointments WHERE Title LIKE ?";
+        PreparedStatement ps = JDBC.connection.prepareCall((getAppointments));
+        ps.setString(1, "%" + search + "%");
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Appointment> appointmentsList = FXCollections.observableArrayList();
+        while (rs.next()) {
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            String start = util.utcToLocal(rs.getTimestamp("Start").toLocalDateTime());
+            String end = util.utcToLocal(rs.getTimestamp("End").toLocalDateTime());
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            String contactName = contactUtil.getContactName(rs.getInt("Contact_ID"));
+            Appointment appointment = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactName);
+            appointmentsList.add(appointment);
+        }
+        return appointmentsList;
+    }
+
+    /**
      * @param in_userId
      * @return All appointments for the provided user id
      * @throws SQLException

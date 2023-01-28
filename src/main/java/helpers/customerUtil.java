@@ -106,6 +106,31 @@ public class customerUtil {
     }
 
     /**
+     * @return Search customers by name
+     * @throws SQLException
+     */
+    public static ObservableList<Customer> searchCustomers(String search) throws SQLException {
+        String getCustomer = " SELECT * FROM customers WHERE Customer_Name LIKE ?";
+        PreparedStatement ps = JDBC.connection.prepareCall(getCustomer);
+        ps.setString(1, "%" + search + "%");
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            int id = rs.getInt("Customer_ID");
+            String name = rs.getString("Customer_Name");
+            String address = rs.getString("Address");
+            String postal = rs.getString("Postal_Code");
+            String phone = rs.getString("Phone");
+            String division = customerUtil.getDivisionName(rs.getInt("Division_ID"));
+            String country = customerUtil.getCountryName(rs.getInt("Division_ID"));
+            Customer customer = new Customer(id, name, address, postal, phone, division, country);
+            customerList.add(customer);
+        }
+        return customerList;
+    }
+
+    /**
      * Checks DB for customer by customerId
      * @param in_customerId
      * @return Returns true if found, false if not.

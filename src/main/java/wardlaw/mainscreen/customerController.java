@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
@@ -25,6 +26,8 @@ import java.util.ResourceBundle;
 
 
 public class customerController implements Initializable {
+    @FXML
+    public TextField textSearch;
     @FXML
     private TableView<Customer> customersTable;
     @FXML
@@ -119,6 +122,12 @@ public class customerController implements Initializable {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public void searchCustomers() throws SQLException {
+        String name = textSearch.getText();
+        customerList = customerUtil.searchCustomers(name);
+        customersTable.setItems(customerList);
     }
 
     /**

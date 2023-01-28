@@ -1,5 +1,7 @@
 package wardlaw.mainscreen;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,8 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class appointmentsController implements Initializable {
+    @FXML
+    public TextField textSearch;
     @FXML
     public ToggleGroup toggleGroupAppt;
     @FXML
@@ -50,6 +54,8 @@ public class appointmentsController implements Initializable {
     private TableColumn<Appointment, Integer> colApptUserId;
     @FXML
     private RadioButton radioBtnAll;
+
+    private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
 
     public static Appointment selectedAppointment;
 
@@ -152,6 +158,11 @@ public class appointmentsController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void searchAppointments() throws SQLException {
+        String contact = textSearch.getText();
+        appointTable.setItems(appointmentsUtil.searchAppointments(contact));
     }
 
     /**

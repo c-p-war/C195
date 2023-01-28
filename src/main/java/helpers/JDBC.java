@@ -13,8 +13,8 @@ public abstract class JDBC {
     // + "?connectionTimezone = SERVER";
     private static final String jdbcURL = protocol + vendor + location + databaseName;
     private static final String driver = "com.mysql.cj.jdbc.Driver";
-    private static final String userName = "test";
-    private static final String password = "test";
+    private static final String userName = "root";
+    private static final String password = "digital91";
     public static Connection connection;
 
     public static void openConnection(){
