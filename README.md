@@ -2,24 +2,21 @@
 'Scheduling App'
 
 ## PURPOSE
-Provides GUI application for Java based scheduling application. 
+Provides search enhancement for Java based scheduling application. 
 ## AUTHOR
 Caleb Wardlaw
 ## CONTACT
 cwardl4@wgu.edu
 
 ## APP. VERSION
-1.0 (Attempt 1)
-
-1.1 (Attempt 2)
+1.2 (Capstone)
 
 ***Changes*** - 
-1. Updated login btn to say "login" when viewed in English
-2. Set a user existence check when updating/adding appointments
-3. Set a customer existence check when updating/adding appointments
+1. Added search feature to Customers table
+2. Added search feature to Appointments table
 
 ## DATE
-10/26/2022
+01/29/2023
 
 ## IDE
 IntelliJ IDEA 2022.2.3 (Ultimate Edition)
@@ -39,9 +36,9 @@ IntelliJ IDEA 2022.2.3 (Ultimate Edition)
 After starting the application you will be directed to a login page. Enter credentials and you will navigate to the main screen with three options: 
 
 ### Appointments
-Leads to the main appointments table. From here you can delete, add, and update appointments. 
+Leads to the main appointments table. From here you can search, delete, add, and update appointments. 
 ### Customers
-Leads to the main customers table. From here you can delete, add, and update customers. 
+Leads to the main customers table. From here you can search, delete, add, and update customers. 
 ### Reports
 Leads to the reporting table(s). There are two standard reports and one custom report. 
 

@@ -3,6 +3,7 @@ insert into users (User_ID, User_Name, Password, Created_By) values (3, 'Robyn',
 insert into users (User_ID, User_Name, Password, Created_By) values (4, 'Pamela', 'Peckham', 'script');
 insert into users (User_ID, User_Name, Password, Created_By) values (5, 'Deck', 'Caroline', 'script');
 insert into users (User_ID, User_Name, Password, Created_By) values (6, 'Andra', 'Bartelot', 'script');
+insert into users (User_ID, User_Name, Password, Created_By) values (6, 'admin', 'admin', 'script');
 
 -- Customers
 insert into customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) values (4, 'Chance Amos', '7 Spenser Place', '33c92', '694-754-9592', 68);
